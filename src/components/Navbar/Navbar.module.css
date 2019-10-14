@@ -1,0 +1,21 @@
+.Navbar {
+  /* background: black; */
+  background: #3fab58;
+  /* background-image: linear-gradient(
+    to right,
+    #00d324,
+    #94b800,
+    #cd9600,
+    #f26b00,
+    #ff3a43
+  ); */
+  /* color: white !important; */
+}
+
+.Navbar a {
+  color: rgb(235, 235, 235) !important;
+}
+
+.Navbar button {
+  background: white !important;
+}
