@@ -1,17 +1,26 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import classes from "./Navbar.module.css";
+import "./Navbar.css";
+import { NavLink } from "react-router-dom";
 const navbar = props => (
-  <Navbar className={classes.Navbar} sticky="top" collapseOnSelect expand="md">
+  <Navbar sticky="top" collapseOnSelect expand="md">
     <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav>
-        <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="/">About</Nav.Link>
-        <Nav.Link href="/">Store</Nav.Link>
-        <Nav.Link href="/">Contact</Nav.Link>
+        <NavLink to="/" exact activeClassName="active">
+          Home
+        </NavLink>
+        <NavLink to="/about" exact activeClassName="active">
+          About
+        </NavLink>
+        <NavLink to="/store" activeClassName="active">
+          Store
+        </NavLink>
+        {/* <NavLink to="/" activeClassName="active">
+          Contact
+        </NavLink> */}
       </Nav>
     </Navbar.Collapse>
   </Navbar>
