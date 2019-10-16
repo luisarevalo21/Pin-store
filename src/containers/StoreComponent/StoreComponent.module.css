@@ -1,0 +1,31 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+}
+
+.Gallery {
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: #ffffff;
+  padding-bottom: 35px;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.Image {
+  display: block;
+}
+.Aside {
+  flex-direction: column;
+  text-align: left;
+  display: block;
+  height: auto;
+}
+
+.Aside a {
+  display: block;
+}

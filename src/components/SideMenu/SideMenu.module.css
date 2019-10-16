@@ -1,0 +1,21 @@
+.SideMenu {
+  margin-top: 35px;
+  padding-right: 100px;
+  text-align: left;
+}
+
+.SideMenu a {
+  padding: 0;
+  color: black;
+  background-color: white;
+  text-decoration: none;
+}
+
+/* .Link {
+  padding: 0;
+} */
+.ListItem {
+  margin: 15px;
+  padding: 0;
+  border: none;
+}
