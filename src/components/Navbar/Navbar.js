@@ -18,6 +18,9 @@ const navbar = props => (
         <NavLink to="/store" activeClassName="active">
           Store
         </NavLink>
+        <NavLink to="/contact" activeClassName="active">
+          Contact
+        </NavLink>
         {/* <NavLink to="/" activeClassName="active">
           Contact
         </NavLink> */}

@@ -5,7 +5,8 @@ import Navbar from "./components/Navbar/Navbar";
 import HomeComponent from "./components/HomeComponent/HomeComponent";
 import StoreComponent from "./containers/StoreComponent/StoreComponent";
 import AboutComponent from "./components/AboutComponent/AboutComponent";
-
+import Footer from "./components/Footer/Footer";
+import Contact from "./containers/ContactComponent/ContactComponent";
 import { Route, Switch } from "react-router-dom";
 function App() {
   return (
@@ -16,7 +17,10 @@ function App() {
         <Route path="/" exact component={HomeComponent} />
         <Route path="/about" component={AboutComponent} />
         <Route path="/store" component={StoreComponent} />
+        <Route path="/contact" component={Contact} />
       </Switch>
+
+      <Footer />
     </div>
   );
 }
