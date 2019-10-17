@@ -3,10 +3,11 @@ import classes from "./CardComponent.module.css";
 
 const cardComponent = props => (
   <div className={classes.Card}>
-    <p>Image here</p>
-    <p>Item name</p>
-    <p>$Price</p>
-    <p>id</p>
+    <img src={props.image} />
+    {/* <p>{props.name}</p> */}
+    <p>{props.title}</p>
+    <p>$ {props.price}</p>
+    <p>{props.id}</p>
   </div>
 );
 

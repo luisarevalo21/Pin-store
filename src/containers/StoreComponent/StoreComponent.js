@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import classes from "./StoreComponent.module.css";
 import image from "../../assets/images/HomeImages/PhoneGrips.jpg";
+
+import soraImage from "../../assets/images/StoreImages/soraSticker.jpg";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import CardComponent from "../../components/CardComponent/CardComponent";
 
@@ -18,7 +20,7 @@ class StoreComponent extends Component {
           <SideMenu />
 
           <div className={classes.Gallery}>
-            <CardComponent />
+            <CardComponent title="Sora sticker" image={soraImage} price={2.0} />
             <CardComponent />
             <CardComponent />
             <CardComponent />
