@@ -14,14 +14,14 @@ import * as firebase from "firebase";
   /* // Your web app's Firebase configuration */
 }
 var firebaseConfig = {
-  apiKey: "AIzaSyCr9VbKjbCIITEobvKJEKY9gSNsZiJ6xjs",
-  authDomain: "twin-bear-creations.firebaseapp.com",
-  databaseURL: "https://twin-bear-creations.firebaseio.com",
-  projectId: "twin-bear-creations",
-  storageBucket: "twin-bear-creations.appspot.com",
-  messagingSenderId: "506361600740",
-  appId: "1:506361600740:web:2080bfb0df2f9a4c752af1",
-  measurementId: "G-M5LXXY0RRG"
+  apiKey: config.firebase.apiKey,
+  authDomain: config.firebase.authDomain,
+  databaseURL: config.firebase.databaseURL,
+  projectId: config.firebase.projectId,
+  storageBucket: config.firebase.storageBucket,
+  messagingSenderId: config.firebase.messagingSenderId,
+  appId: config.firebase.appId,
+  measurementId: config.firebase.measurementId
 };
 {
   /* // Initialize Firebase */
