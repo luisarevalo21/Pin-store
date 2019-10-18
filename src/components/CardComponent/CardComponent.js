@@ -5,8 +5,8 @@ const cardComponent = props => (
   <div className={classes.Card}>
     <img src={props.image} />
     {/* <p>{props.name}</p> */}
-    <p>{props.title}</p>
-    <p>$ {props.price}</p>
+    <p className={classes.Title}>{props.title}</p>
+    <p className={classes.Price}>${props.price}.00</p>
     <p>{props.id}</p>
   </div>
 );

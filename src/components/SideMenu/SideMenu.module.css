@@ -7,13 +7,15 @@
 .SideMenu a {
   padding: 0;
   color: black;
-  background-color: white;
+  /* background-color: yellow; */
   text-decoration: none;
 }
+/* .SideMenu a:active {
+} */
 
-.active {
-  background-color: red;
-}
+/* .SideMenu a:focus {
+  background-color: purple !important;
+} */
 /* .Link {
   padding: 0;
 } */

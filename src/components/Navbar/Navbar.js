@@ -15,9 +15,10 @@ const navbar = props => (
         <NavLink to="/about" exact activeClassName="active">
           About
         </NavLink>
-        <NavLink to="/store/shopall" activeClassName="active">
+        <NavLink to="/store" activeClassName="active">
           Store
         </NavLink>
+
         <NavLink to="/contact" activeClassName="active">
           Contact
         </NavLink>
