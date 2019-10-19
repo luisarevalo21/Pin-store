@@ -13,6 +13,8 @@ import * as firebase from "firebase";
 {
   /* // Your web app's Firebase configuration */
 }
+
+const config = require("./config");
 var firebaseConfig = {
   apiKey: config.firebase.apiKey,
   authDomain: config.firebase.authDomain,
@@ -28,4 +30,6 @@ var firebaseConfig = {
 }
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+var storage = firebase.storage();
+export { storage, firebase as default };
 // </script>

@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 const sideMenu = props => (
   <ListGroup className={classes.SideMenu}>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/shopall" activeClassName="active">
+      <NavLink to="/store" exact activeClassName="active">
         Shop All >
       </NavLink>
     </ListGroup.Item>

@@ -7,6 +7,8 @@ import StoreComponent from "./containers/StoreComponent/StoreComponent";
 import AboutComponent from "./components/AboutComponent/AboutComponent";
 import Footer from "./components/Footer/Footer";
 import Contact from "./containers/ContactComponent/ContactComponent";
+import SelectedItemComponent from "./containers/SelectedItem/SeletectedItem";
+
 import { Route, Switch } from "react-router-dom";
 function App() {
   return (
@@ -16,7 +18,14 @@ function App() {
       <Switch>
         <Route path="/" exact component={HomeComponent} />
         <Route path="/about" component={AboutComponent} />
+        <Route
+          path="/store/:id:elementKey"
+          exact
+          component={SelectedItemComponent}
+        />
+
         <Route path="/store" component={StoreComponent} />
+
         {/* <Route path="/store/pins" component={StoreComponent} /> */}
         <Route path="/contact" component={Contact} />
       </Switch>

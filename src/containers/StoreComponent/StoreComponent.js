@@ -6,6 +6,8 @@ import soraImage from "../../assets/images/StoreImages/soraSticker.jpg";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import axios from "../../axios";
+// import { Link, Redirect } from "react-router-dom";
+
 class StoreComponent extends Component {
   state = {
     products: null,
@@ -28,8 +30,16 @@ class StoreComponent extends Component {
       })
       .catch(error => console.log(error));
   }
+  handleClick = (id, elementKey) => {
+    this.props.history.push(`${this.props.match.url}/${id}${elementKey}`);
+    // console.log(this.props.location);
+
+    // return <Link to="/store/item" />;
+  };
+
   render() {
     let items = null;
+    console.log(this.props);
     // console.log(this.state.products.length);
     if (this.state.products !== null && this.state.pins !== null) {
       console.log("inside if");
@@ -38,14 +48,21 @@ class StoreComponent extends Component {
       const keys = Object.keys(this.state.products.pins);
       console.log(this.state.pins);
 
-      items = keys.map(element => (
-        <CardComponent
-          key={Math.random()}
-          title={pins[element].title}
-          image={soraImage}
-          price={pins[element].price}
-        />
-      ));
+      items = keys.map(element => {
+        console.log("the element is ", element);
+        // <Link to="/store/item">
+        return (
+          <CardComponent
+            clicked={() => this.handleClick(1, element)}
+            key={Math.random()}
+            title={pins[element].title}
+            image={soraImage}
+            price={pins[element].price}
+          />
+        );
+
+        // </Link>
+      });
 
       // console.log(values);
       // values.map(element => console.log(element.price));
