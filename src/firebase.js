@@ -30,6 +30,4 @@ var firebaseConfig = {
 }
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-var storage = firebase.storage();
-export { storage, firebase as default };
 // </script>

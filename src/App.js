@@ -19,12 +19,13 @@ function App() {
         <Route path="/" exact component={HomeComponent} />
         <Route path="/about" component={AboutComponent} />
         <Route
-          path="/store/:id:elementKey"
+          path="/store/:type/:title"
           exact
           component={SelectedItemComponent}
         />
 
         <Route path="/store" component={StoreComponent} />
+        {/* <Route path="/store/" component={StoreComponent} /> */}
 
         {/* <Route path="/store/pins" component={StoreComponent} /> */}
         <Route path="/contact" component={Contact} />

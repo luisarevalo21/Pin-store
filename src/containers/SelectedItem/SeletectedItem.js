@@ -23,13 +23,30 @@ class SelectedItem extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props.match.params);
+
+    // console.
+    const { title, type } = this.props.match.params;
+
+    console.log("the id is", title);
+    const typeOfProduct = type + "s";
+
     axios
-      .get(`/pins/${this.props.match.params.elementKey}.json`)
+      .get(`/${typeOfProduct}/${title}.json`)
       .then(response => this.setState({ selectedItem: response.data }))
       .catch(error => console.log(error));
 
+    // axios
+    //   .get(`/${type}.json`)
+    //   .then(response => console.log(response))
+    //   .catch(error => console.log(error));
+    // axios
+    //   .get(`/pins/${this.props.match.params.elementKey}.json`)
+    //   .then(response => this.setState({ selectedItem: response.data }))
+    //   .catch(error => console.log(error));
+
     storage
-      .child("soraSticker.jpg")
+      .child(`${title}.jpg`)
       .getDownloadURL()
       .then(url => this.setState({ selectedImage: url }))
       .catch(error => console.log(error));
@@ -59,7 +76,7 @@ class SelectedItem extends Component {
 
           <div className={classes.Card}>
             <h3>{selectedItem.title}</h3>
-            <p className={classes.Price}>${selectedItem.price}.00</p>
+            <p className={classes.Price}>{selectedItem.price}</p>
             <h3>Description</h3>
             <p>{selectedItem.description}</p>
           </div>

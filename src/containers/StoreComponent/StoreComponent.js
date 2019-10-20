@@ -11,53 +11,79 @@ import axios from "../../axios";
 class StoreComponent extends Component {
   state = {
     products: null,
-    pins: null
+    pins: null,
+    stickers: null,
+    phoneGrips: null
   };
 
   componentDidMount() {
+    // console.log(this.props);
     axios
       .get("/products.json")
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({ products: response.data });
       })
       .catch(error => console.log(error));
     axios
       .get("/pins.json")
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({ pins: response.data });
       })
       .catch(error => console.log(error));
+    axios
+      .get("/stickers.json")
+      .then(response => {
+        // console.log(response.data);
+        this.setState({ stickers: response.data });
+      })
+      .catch(error => console.log(error));
   }
-  handleClick = (id, elementKey) => {
-    this.props.history.push(`${this.props.match.url}/${id}${elementKey}`);
+  handleClick = (title, type) => {
+    console.log("the type is", title);
+    this.props.history.push(`${this.props.match.url}/${type}/${title}`);
     // console.log(this.props.location);
 
     // return <Link to="/store/item" />;
   };
 
-  render() {
-    let items = null;
-    console.log(this.props);
-    // console.log(this.state.products.length);
-    if (this.state.products !== null && this.state.pins !== null) {
-      console.log("inside if");
-      const { pins } = this.state;
-      // console.log(this.state.pins);
-      const keys = Object.keys(this.state.products.pins);
-      console.log(this.state.pins);
+  // componentDidUpdate(){
 
+  // }
+
+  render() {
+    console.log(this.state.products);
+    let items = <div>No items to dispaly </div>;
+    // console.log(this.props);
+    // console.log(this.state.products.length);
+    if (
+      this.state.products !== null &&
+      this.state.pins !== null &&
+      this.state.stickers !== null
+    ) {
+      // console.log("inside if");
+      const { pins, stickers } = this.state;
+
+      const combined = { ...pins, ...stickers };
+
+      console.log("combined is ", combined);
+      // console.log(this.state.pins);
+      const keys = Object.keys(combined);
+      // console.log(this.state.pins);
       items = keys.map(element => {
         console.log("the element is ", element);
         // <Link to="/store/item">
         return (
           <CardComponent
-            clicked={() => this.handleClick(1, element)}
+            clicked={() =>
+              this.handleClick(combined[element].title, combined[element].type)
+            }
             key={Math.random()}
-            title={pins[element].title}
+            title={combined[element].title}
             image={soraImage}
-            price={pins[element].price}
+            price={combined[element].price}
+            // type={combined[element].type}
           />
         );
 
