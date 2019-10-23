@@ -31,7 +31,7 @@ class SelectedItem extends Component {
     // console.
     const { title, type } = this.props.match.params;
 
-    console.log("the id is", title);
+    // console.log("the id is", title);
     const typeOfProduct = type + "s";
 
     axios
@@ -68,11 +68,11 @@ class SelectedItem extends Component {
   render() {
     // console.log(this.props);
     const { selectedItem, selectedImage } = this.state;
-    console.log(selectedImage);
-    console.log(selectedItem);
+    // console.log(selectedImage);
+    // console.log(selectedItem);
     let displayedItem = null;
     if (this.state.selectedItem !== null && this.state.selectedImage !== null) {
-      console.log("inside if");
+      // console.log("inside if");
       displayedItem = (
         <>
           <img src={selectedImage} className={classes.Image} />

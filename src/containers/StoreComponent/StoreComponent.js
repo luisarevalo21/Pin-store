@@ -48,9 +48,9 @@ class StoreComponent extends Component {
   };
 
   componentDidUpdate() {
-    console.log("will update was called");
-    console.log("stae.location is", this.state.location);
-    console.log("props.location", this.props.location.pathname);
+    // console.log("will update was called");
+    // console.log("stae.location is", this.state.location);
+    // console.log("props.location", this.props.location.pathname);
 
     if (this.state.currentPath !== this.props.location.pathname) {
       this.fetchingData();
@@ -59,7 +59,7 @@ class StoreComponent extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.location.pathname);
+    // console.log(this.props.location.pathname);
 
     this.fetchingData();
 
@@ -92,7 +92,7 @@ class StoreComponent extends Component {
   }
 
   fetchingData = () => {
-    console.log("the locaiton is fetching is", this.props.location.pathname);
+    // console.log("the locaiton is fetching is", this.props.location.pathname);
 
     switch (this.props.location.pathname) {
       case "/store":
@@ -302,7 +302,7 @@ class StoreComponent extends Component {
       default:
         items = <div>No items to dispaly </div>;
     }
-    console.log("this.props.location", this.props);
+    // console.log("this.props.location", this.props);
     // console.log(this.props);
     // console.log(this.state.products.length);
 
