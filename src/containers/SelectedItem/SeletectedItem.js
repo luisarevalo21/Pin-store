@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import classes from "./SelectedItem.module.css";
 import axios from "../../axios";
-import firebase from "firebase";
+// import { withFirebase } from "../../Firebase/index";
+import firebase from "../../firebase";
 // import firebase from "../../config";
 
 // import imageAxios from "axios";
-// const storage = firebase.storage().ref();
 
-const config = {
-  apiKey: "AIzaSyCr9VbKjbCIITEobvKJEKY9gSNsZiJ6xjs",
-  authDomain: "twin-bear-creations.firebaseapp.com",
-  storageBucket: "twin-bear-creations.appspot.com"
-};
+// console.log(this.props);
 
-firebase.initializeApp(config);
+// const config = {
+//   apiKey: "AIzaSyCr9VbKjbCIITEobvKJEKY9gSNsZiJ6xjs",
+//   authDomain: "twin-bear-creations.firebaseapp.com",
+//   storageBucket: "twin-bear-creations.appspot.com"
+// };
+
+// firebase.initializeApp(config);
 const storage = firebase.storage().ref();
 
 class SelectedItem extends Component {
@@ -23,7 +25,8 @@ class SelectedItem extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.match.params);
+    console.log(this.props);
+    // const storage = this.props.firebase.storage().ref();
 
     // console.
     const { title, type } = this.props.match.params;
@@ -64,15 +67,15 @@ class SelectedItem extends Component {
   }
   render() {
     // console.log(this.props);
-    const { selectedItem } = this.state;
-
+    const { selectedItem, selectedImage } = this.state;
+    console.log(selectedImage);
     console.log(selectedItem);
     let displayedItem = null;
     if (this.state.selectedItem !== null && this.state.selectedImage !== null) {
       console.log("inside if");
       displayedItem = (
         <>
-          <img src={this.state.selectedImage} className={classes.Image} />
+          <img src={selectedImage} className={classes.Image} />
 
           <div className={classes.Card}>
             <h3>{selectedItem.title}</h3>

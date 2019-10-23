@@ -10,8 +10,12 @@ import Contact from "./containers/ContactComponent/ContactComponent";
 import SelectedItemComponent from "./containers/SelectedItem/SeletectedItem";
 
 import { Route, Switch } from "react-router-dom";
+
+// import { BrowserRouter } from "react-router-dom";
+
 function App() {
   return (
+    // <BrowserRouter>
     <div className="App">
       <Navbar />
 
@@ -25,6 +29,9 @@ function App() {
         />
 
         <Route path="/store" component={StoreComponent} />
+        <Route path="/store/stickers" component={StoreComponent} />
+        <Route path="/store/pins" component={StoreComponent} />
+
         {/* <Route path="/store/" component={StoreComponent} /> */}
 
         {/* <Route path="/store/pins" component={StoreComponent} /> */}
@@ -33,6 +40,7 @@ function App() {
 
       <Footer />
     </div>
+    // </BrowserRouter>
   );
 }
 
