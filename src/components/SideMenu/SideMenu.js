@@ -6,22 +6,34 @@ import { NavLink } from "react-router-dom";
 const sideMenu = props => (
   <ListGroup className={classes.SideMenu}>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/shopall">Shop All ></NavLink>
+      <NavLink to="/store" exact activeClassName="active">
+        Shop All >
+      </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/diamondpaintings">Diamond Paintings</NavLink>
+      <NavLink to="/store/diamondpaintings" activeClassName="active">
+        Diamond Paintings
+      </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/pins">Pins</NavLink>
+      <NavLink to="/store/pins" activeClassName="active">
+        Pins
+      </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/phonegrips">Phone Grips</NavLink>
+      <NavLink to="/store/phonegrips" activeClassName="active">
+        Phone Grips
+      </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/stickers">Stickers</NavLink>
+      <NavLink to="/store/stickers" activeClassName="active">
+        Stickers
+      </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/temporarytattoos">Temporary Tattoos</NavLink>
+      <NavLink to="/store/temporarytattoos" activeClassName="active">
+        Temporary Tattoos
+      </NavLink>
     </ListGroup.Item>
     {/* <ListGroup.Item className={classes.ListItem}>
       <NavLink className={classes.Link}>Diamond Paintings</NavLink>

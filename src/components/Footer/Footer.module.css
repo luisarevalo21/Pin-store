@@ -1,0 +1,31 @@
+.Footer {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  justify-content: center;
+  background: #ffc680;
+  padding: 10px;
+  width: 100%;
+  /* margin: 10px; */
+  /* max-height: 50px; */
+  /* position: sticky; */
+  /* bottom: 0; */
+  /* left: 0; */
+}
+
+.Info {
+  width: 100%;
+  margin-right: 15px;
+  /* max-height: 50px; */
+}
+
+.Social {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.Social img {
+  width: 15%;
+  margin-right: 5px;
+}

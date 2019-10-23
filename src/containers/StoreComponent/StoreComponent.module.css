@@ -1,6 +1,9 @@
 .Container {
   display: flex;
   flex-direction: row;
+  min-height: 100vh;
+  /* min-height: calc(500px); */
+
   /* flex-wrap: wrap; */
 }
 
