@@ -6,32 +6,38 @@ import { NavLink } from "react-router-dom";
 const sideMenu = props => (
   <ListGroup className={classes.SideMenu}>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store" exact activeClassName="active">
+      <NavLink to="/store" exact activeStyle={{ backgroundColor: "red" }}>
         Shop All >
       </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/diamondpaintings" activeClassName="active">
+      <NavLink
+        to="/store/diamondpaintings"
+        activeStyle={{ backgroundColor: "red" }}
+      >
         Diamond Paintings
       </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/pins" activeClassName="active">
+      <NavLink to="/store/pins" activeStyle={{ backgroundColor: "red" }}>
         Pins
       </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/phonegrips" activeClassName="active">
+      <NavLink to="/store/phonegrips" activeStyle={{ backgroundColor: "red" }}>
         Phone Grips
       </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/stickers" activeClassName="active">
+      <NavLink to="/store/stickers" activeStyle={{ backgroundColor: "red" }}>
         Stickers
       </NavLink>
     </ListGroup.Item>
     <ListGroup.Item className={classes.ListItem}>
-      <NavLink to="/store/temporarytattoos" activeClassName="active">
+      <NavLink
+        to="/store/temporarytattoos"
+        activeStyle={{ backgroundColor: "red" }}
+      >
         Temporary Tattoos
       </NavLink>
     </ListGroup.Item>

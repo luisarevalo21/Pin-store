@@ -8,6 +8,7 @@ import AboutComponent from "./components/AboutComponent/AboutComponent";
 import Footer from "./components/Footer/Footer";
 import Contact from "./containers/ContactComponent/ContactComponent";
 import SelectedItemComponent from "./containers/SelectedItem/SeletectedItem";
+import AdminComponent from "./components/AdminNavigationComponent/AdminNavigationComponent";
 
 import { Route, Switch } from "react-router-dom";
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/store" component={StoreComponent} />
         <Route path="/store/stickers" component={StoreComponent} />
         <Route path="/store/pins" component={StoreComponent} />
+        <Route path="/admin" component={AdminComponent} />
 
         {/* <Route path="/store/" component={StoreComponent} /> */}
 
