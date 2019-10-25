@@ -1,0 +1,21 @@
+.Top {
+  min-height: 500px;
+  margin-top: 30px;
+}
+
+.Layout {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  /* background-color: white; */
+  /* min-height: 500px; */
+}
+
+/* .active {
+  background-color: purple !important;
+} */
+/* .Layout:active {
+}
+.active {
+  background-color: white !important;
+} */

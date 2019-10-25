@@ -1,0 +1,27 @@
+.Layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 500px;
+  text-align: left;
+}
+
+.AboutCompoent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  /* width: 50%; */
+  justify-content: center;
+  word-wrap: break-word;
+}
+
+.Border {
+  border-bottom: 2px dotted blue;
+  opacity: 0.4;
+  margin: 9px 0;
+}
+p {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}

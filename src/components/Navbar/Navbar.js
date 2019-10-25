@@ -9,18 +9,21 @@ const navbar = props => (
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav>
-        <NavLink to="/" exact activeClassName="active">
+        <NavLink to="/" exact activeStyle={{ backgroundColor: "red" }}>
           Home
         </NavLink>
-        <NavLink to="/about" exact activeClassName="active">
+        <NavLink to="/about" activeStyle={{ backgroundColor: "red" }}>
           About
         </NavLink>
-        <NavLink to="/store" activeClassName="active">
+        <NavLink to="/store" activeStyle={{ backgroundColor: "red" }}>
           Store
         </NavLink>
 
-        <NavLink to="/contact" activeClassName="active">
+        <NavLink to="/contact" activeStyle={{ backgroundColor: "red" }}>
           Contact
+        </NavLink>
+        <NavLink to="/admin" activeStyle={{ backgroundColor: "red" }}>
+          Admin
         </NavLink>
         {/* <NavLink to="/" activeClassName="active">
           Contact
