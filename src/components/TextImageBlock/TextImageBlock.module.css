@@ -1,3 +1,57 @@
+.Layout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  /* flex-wrap: wrap-reverse;
+  justify-content: center !important; */
+
+  /* justify-content: center; */
+  margin: 0 auto;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.ShopLink {
+  text-decoration: none;
+  font-size: 1em;
+  color: black;
+}
+.Description {
+  /* flex-direction: column;
+  text-align: left;
+  flex-direction: column;
+  /* padding-bottom: 50%; */
+  padding: 10px;
+  text-align: left;
+  /* justify-content: left; */
+  /* margin-right: 30%; */
+  /* padding-right: 20px; */
+}
+
+.DescriptionRight {
+  padding: 10px;
+  text-align: left;
+  margin-left: auto;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+.Image {
+  width: auto;
+  height: 300px;
+  margin-left: auto;
+  /* padding: 20px; */
+  /* float: right; */
+  /* padding-right: 20px; */
+}
+
+.ImageRight {
+  width: auto;
+  height: 300px;
+  margin-right: 100px;
+}
+
 /* .Block {
   /* display: flex;
   flex-direction: row;
@@ -21,27 +75,32 @@
 position: absolute;
 float: right; */
 /* right: 40px; */
-
+/* 
 .Image1 {
   grid-column: 2 / 4;
   /* background-image: url("../../assets/images/HomeImages/PinImage.jpg"); */
-  /* background-position: center;
+/* background-position: center;
   background-repeat: no-repeat;
   background-size: cover; */
-  /* margin-left: 75%; */
-  background-position: center;
+/* margin-left: 75%; */
+/* background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  /* height: 200px;
+  height: auto; */
+/* height: auto;
   width: 500px; */
-}
+/*} */
+/* /* height: 200px; */
 
-.Image2 {
+/* .Image2 {
   grid-column: 1 / 3;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+  /* height: 300px; */
+/* width: 500px; */
+/*} */
+
 /* .Image1 img {
   height: 200px;
   width: 500px;
@@ -66,20 +125,3 @@ float: right; */
   position: absolute;
   right: 0px;
 } */
-
-.ShopLink {
-  text-decoration: none;
-  font-size: 1em;
-  color: black;
-}
-.Description {
-  /* flex-direction: column;
-  text-align: left;
-  margin-right: auto; */
-  padding-bottom: 50%;
-  text-align: left;
-}
-
-.Description h2 {
-  font-size: 2em;
-}

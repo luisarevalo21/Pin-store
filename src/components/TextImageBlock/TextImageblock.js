@@ -6,7 +6,7 @@ const textImageBlock = props => {
   switch (props.direction) {
     case "left":
       block = (
-        <>
+        <div className={classes.Layout}>
           <div className={classes.Description}>
             <h2>{props.title}</h2>
             <p> {props.text} </p>
@@ -14,33 +14,39 @@ const textImageBlock = props => {
               SHOP NOW >
             </a>
           </div>
+          <img src={props.image} alt="image" className={classes.Image} />
 
-          <div
+          {/* <div
+
+          
             style={{ backgroundImage: `url(${props.image})` }}
             className={classes.Image1}
           >
             {/* <img src={props.image} /> */}
-          </div>
-        </>
+          {/* </div> */}
+        </div>
       );
       break;
     case "right":
       block = (
-        <>
-          <div
+        <div className={classes.Layout}>
+          {/* <div
             style={{ backgroundImage: `url(${props.image})` }}
             className={classes.Image2}
           >
+          
             {/* <img src={props.image} /> */}
-          </div>
-          <div className={classes.Description}>
+          {/* </div> */}
+          <img src={props.image} alt="image" className={classes.ImageRight} />
+
+          <div className={classes.DescriptionRight}>
             <h2>{props.title}</h2>
             <p> {props.text} </p>
             <a href="/" className={classes.ShopLink}>
               SHOP NOW >
             </a>
           </div>
-        </>
+        </div>
       );
       break;
   }

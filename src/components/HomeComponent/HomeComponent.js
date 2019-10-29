@@ -2,25 +2,27 @@ import React from "react";
 import TextImageBlock from "../TextImageBlock/TextImageblock";
 import PhoneGrips from "../../assets/images/HomeImages/PhoneGrips.jpg";
 import PinImage from "../../assets/images/HomeImages/PinImage.jpg";
+import StickerImage from "../../assets/images/HomeImages/KH_Kairi_Chibi_Sticker.jpg";
 import TemporaryTattoos from "../../assets/images/HomeImages/TemporaryTattoos.jpg";
 import classes from "./HomeComponent.module.css";
 
 const homeComponent = props => {
   return (
-    <div className="container">
-      <p>Home image </p>
+    <div className={classes.Layout}>
+      {/* <p>Home image </p> */}
 
-      <div className={classes.Block}>
+      <div>
         <TextImageBlock
           text="Beautiful pins"
           title="Pins"
           image={PinImage}
           direction="left"
         />
+        {/* <div>text</div> */}
         <TextImageBlock
           text="Beautiful stickers"
           title="Stickers"
-          image={PinImage}
+          image={StickerImage}
           direction="right"
         />
         <TextImageBlock
@@ -31,7 +33,7 @@ const homeComponent = props => {
         />
         <TextImageBlock
           text="Beautiful temporary tatttoos"
-          title="temporary tattoos"
+          title="Temporary Tattoos"
           image={TemporaryTattoos}
           direction="right"
         />
