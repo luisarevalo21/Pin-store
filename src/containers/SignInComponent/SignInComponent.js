@@ -1,36 +1,50 @@
 import React, { Component } from "react";
 import classes from "./SignInComponent.module.css";
+import firebase from "../../firebase"
 class SignInComponent extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    error: null,
   };
 
-  handleChange = (input, event) => {
-    // console.log(input);
-    this.setState({ [input]: event.target.value });
+  handleInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
   };
-
-  handleSubmit = event => {
-    //remove to navigation to new page once submission is perforemd
+  handleSubmit = (event) => {
     event.preventDefault();
-
-    console.log("submit issued");
+    const { email, password } = this.state;
+ firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        alert('You successfully Signed In');
+        //this.props.history.push('/');
+      })
+      .catch((error) => {
+        alert('An error was submitted: ' + error);
+        this.setState({ error: error });
+      });
   };
   render() {
+    const { email, password, error } = this.state;
     return (
       <form className={classes.Layout} onSubmit={this.handleSubmit}>
         <h3>Email</h3>
         <input
-          placeholder="email"
-          type="email"
-          onChange={e => this.handleChange("email", e)}
+          type="text" 
+          name="email" 
+          placeholder="Email" 
+          value={email} 
+          onChange={this.handleInputChange} 
         />
         <h3>Password</h3>
         <input
-          placeholder="password"
-          type="password"
-          onChange={e => this.handleChange("password", e)}
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={this.handleInputChange}
         />
         <button className={classes.Button}>Sign In</button>
       </form>
