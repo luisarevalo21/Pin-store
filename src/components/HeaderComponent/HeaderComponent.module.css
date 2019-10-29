@@ -1,0 +1,15 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.Layout img {
+  width: 70%;
+  margin: 0 auto;
+}
+
+@media (max-width: 500px) {
+  .Layout img {
+    width: 100%;
+  }
+}

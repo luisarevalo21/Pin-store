@@ -11,7 +11,7 @@ import SelectedItemComponent from "./containers/SelectedItem/SeletectedItem";
 import AdminComponent from "./components/AdminNavigationComponent/AdminNavigationComponent";
 
 import { Route, Switch } from "react-router-dom";
-
+import HeaderComponent from "./components/HeaderComponent/HeaderComponent";
 // import { BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
     // <BrowserRouter>
     <div className="App">
       <Navbar />
-
+      <HeaderComponent />
       <Switch>
         <Route path="/" exact component={HomeComponent} />
         <Route path="/about" component={AboutComponent} />

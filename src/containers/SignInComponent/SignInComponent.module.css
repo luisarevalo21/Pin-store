@@ -35,3 +35,9 @@
 .Button:hover {
   background-color: #914da8 !important;
 }
+
+@media (max-width: 500px) {
+  .Layout {
+    width: 80%;
+  }
+}
