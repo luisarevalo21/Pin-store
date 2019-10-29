@@ -48,7 +48,8 @@ const config = {
   //}
 };
 
-export default firebase.initializeApp(config);
+firebase.initializeApp(config);
+export default firebase;
 firebase.analytics();
 
 // export default config;

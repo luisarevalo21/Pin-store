@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
+import LogOutComponent from "../LogOutComponent/LogOutComponent";
 const navbar = props => (
   <Navbar sticky="top" collapseOnSelect expand="md">
     <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
@@ -25,6 +26,7 @@ const navbar = props => (
         <NavLink to="/admin" activeStyle={{ backgroundColor: "red" }}>
           Admin
         </NavLink>
+        <LogOutComponent />
         {/* <NavLink to="/" activeClassName="active">
           Contact
         </NavLink> */}
