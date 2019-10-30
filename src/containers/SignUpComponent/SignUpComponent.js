@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classes from "./SignUpComponent.module.css";
+import { withRouter } from 'react-router-dom';
 
 // class SignUpComponent extends Component {
 //   state = {
@@ -69,7 +70,7 @@ handleSubmit = (event) => {
             .createUserWithEmailAndPassword(email, password)
             .then((user) => {
               alert('You successfully Signed Up');
-              //this.props.history.push('/')
+              this.props.history.push('/')
             })
             .catch((error) => {
               alert('An error was submitted: ' + error); 
@@ -117,4 +118,4 @@ handleSubmit = (event) => {
  }
 }
 //export default withRouter(SignUpComponent);
-export default SignUpComponent;
+export default withRouter(SignUpComponent);

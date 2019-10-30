@@ -13,6 +13,8 @@ import firebase from "./firebase";
 import { Route, Switch } from "react-router-dom";
 import HeaderComponent from "./components/HeaderComponent/HeaderComponent";
 import DashBoardComponent from "./containers/DashBoardComponent/DashBoardComponent";
+import ShoppingCart from "./components/ShoppingCartComponent/ShoppingCartComponent";
+
 
 // import { BrowserRouter } from "react-router-dom";
 
@@ -21,24 +23,35 @@ class App extends Component {
     authenticated: false
   };
 
-  componentWillMount() {
-    this.removeAuthListener = firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          authenticated: true
-        });
-      } else {
-        this.setState({
-          authenticated: false
-        });
-      }
+  // componentWillMount() {
+  //   this.removeAuthListener = firebase.auth().onAuthStateChanged(user => {
+  //     if (user) {
+  //       this.setState({
+  //         authenticated: true
+  //       });
+  //     } else {
+  //       this.setState({
+  //         authenticated: false
+  //       });
+  //     }
+  //   });
+  // }
+
+  // componentWillUnmount() {
+  //   this.removeAuthListener();
+  // }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((authenticated) => {
+      authenticated
+        ? this.setState(() => ({
+            authenticated: true,
+          }))
+        : this.setState(() => ({
+            authenticated: false,
+          }));
     });
   }
-
-  componentWillUnmount() {
-    this.removeAuthListener();
-  }
-
   render() {
     return (
       // <BrowserRouter>
@@ -58,6 +71,8 @@ class App extends Component {
           <Route path="/store/pins" component={StoreComponent} />
           <Route path="/account" component={AccountComponent} />
           <Route path="/contact" component={Contact} />
+
+          <Route path="/shopping_cart" component={ShoppingCart} />
 
           <Route path="/dashboard" component={DashBoardComponent} />
         </Switch>
