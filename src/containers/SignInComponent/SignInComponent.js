@@ -27,6 +27,7 @@ class SignInComponent extends Component {
       });
   };
   render() {
+    console.log("this.props", this.props);
     const { email, password, error } = this.state;
     return (
       <form className={classes.Layout} onSubmit={this.handleSubmit}>

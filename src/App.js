@@ -56,7 +56,7 @@ class App extends Component {
           <Route path="/store" component={StoreComponent} />
           <Route path="/store/stickers" component={StoreComponent} />
           <Route path="/store/pins" component={StoreComponent} />
-          <Route path="/account" component={AccountComponent} />
+          <Route path="/account" component={AccountComponent} {...this.props} />
           <Route path="/contact" component={Contact} />
 
           <Route path="/dashboard" component={DashBoardComponent} />
