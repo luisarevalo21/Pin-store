@@ -21,24 +21,35 @@ class App extends Component {
     authenticated: false
   };
 
-  componentWillMount() {
-    this.removeAuthListener = firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          authenticated: true
-        });
-      } else {
-        this.setState({
-          authenticated: false
-        });
-      }
+  // componentWillMount() {
+  //   this.removeAuthListener = firebase.auth().onAuthStateChanged(user => {
+  //     if (user) {
+  //       this.setState({
+  //         authenticated: true
+  //       });
+  //     } else {
+  //       this.setState({
+  //         authenticated: false
+  //       });
+  //     }
+  //   });
+  // }
+
+  // componentWillUnmount() {
+  //   this.removeAuthListener();
+  // }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((authenticated) => {
+      authenticated
+        ? this.setState(() => ({
+            authenticated: true,
+          }))
+        : this.setState(() => ({
+            authenticated: false,
+          }));
     });
   }
-
-  componentWillUnmount() {
-    this.removeAuthListener();
-  }
-
   render() {
     return (
       // <BrowserRouter>

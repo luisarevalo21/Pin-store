@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classes from "./SignInComponent.module.css";
 import firebase from "../../firebase";
+
 class SignInComponent extends Component {
   state = {
     email: "",
@@ -19,7 +20,7 @@ class SignInComponent extends Component {
       .signInWithEmailAndPassword(email, password)
       .then(user => {
         alert("You successfully Signed In");
-        this.props.history.push("/dashboard");
+        //this.props.history.push("../DashBoardComponent/DashBoardComponent");
       })
       .catch(error => {
         alert("An error was submitted: " + error);
