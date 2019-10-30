@@ -3,8 +3,8 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import SignInComponent from "../../containers/SignInComponent/SignInComponent";
 import SignUpComponent from "../../containers/SignUpComponent/SignUpComponent";
-import classes from "./AdminNavigationComponent.module.css";
-const adminComponent = props => (
+import classes from "./AccountComponent.module.css";
+const accountComponent = props => (
   <div className={classes.Top}>
     <Tabs defaultActiveKey="signin" className={classes.Layout}>
       <Tab eventKey="signin" title="Sign In">
@@ -17,4 +17,4 @@ const adminComponent = props => (
   </div>
 );
 
-export default adminComponent;
+export default accountComponent;

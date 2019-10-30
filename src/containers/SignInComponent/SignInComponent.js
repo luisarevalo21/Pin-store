@@ -1,28 +1,28 @@
 import React, { Component } from "react";
 import classes from "./SignInComponent.module.css";
-import firebase from "../../firebase"
+import firebase from "../../firebase";
 class SignInComponent extends Component {
   state = {
     email: "",
     password: "",
-    error: null,
+    error: null
   };
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
- firebase
+    firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        alert('You successfully Signed In');
-        //this.props.history.push('/');
+      .then(user => {
+        alert("You successfully Signed In");
+        this.props.history.push("/dashboard");
       })
-      .catch((error) => {
-        alert('An error was submitted: ' + error);
+      .catch(error => {
+        alert("An error was submitted: " + error);
         this.setState({ error: error });
       });
   };
@@ -32,19 +32,19 @@ class SignInComponent extends Component {
       <form className={classes.Layout} onSubmit={this.handleSubmit}>
         <h3>Email</h3>
         <input
-          type="text" 
-          name="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={this.handleInputChange} 
+          type="text"
+          name="email"
+          placeholder="Email"
+          value={email}
+          onChange={this.handleInputChange}
         />
         <h3>Password</h3>
         <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={this.handleInputChange}
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={this.handleInputChange}
         />
         <button className={classes.Button}>Sign In</button>
       </form>

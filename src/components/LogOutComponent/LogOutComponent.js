@@ -1,11 +1,40 @@
-import React from 'react';
+import React, { Component } from "react";
 import classes from "./LogOutComponent.module.css";
-import firebase from 'firebase';
-const logOutUser = () => {
- firebase.auth().signOut()
-};
-const LogOut = () => {
- //return <Button onClick={logOutUser} children="Log Out" />;
- return <button onClick={logOutUser} className={classes.Button}>Log Out</button>
-};
-export default LogOut;
+import firebase from "firebase";
+import { Redirect } from "react-router-dom";
+
+class Logout extends Component {
+  state = {
+    redirect: false
+  };
+
+  logoutUser = () => {
+    firebase.auth().signOut();
+    this.setState({ redirect: true });
+  };
+  render() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
+    return (
+      <button onClick={this.logoutUser} className={classes.Button}>
+        Log Out
+      </button>
+    );
+  }
+}
+
+export default Logout;
+// const logOutUser = props => {
+//   firebase.auth().signOut();
+
+//   return <Redirect to="/" />;
+
+//   //   props.history.push("/");
+// };
+// const LogOut = props => {
+//   console.log("props is", props);
+//   //return <Button onClick={logOutUser} children="Log Out" />;
+
+// };
+// export default LogOut;
