@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classes from "./SignInComponent.module.css";
 import firebase from "../../firebase";
+import { withRouter } from 'react-router-dom';
 
 class SignInComponent extends Component {
   state = {
@@ -19,8 +20,7 @@ class SignInComponent extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        alert("You successfully Signed In");
-        //this.props.history.push("../DashBoardComponent/DashBoardComponent");
+        this.props.history.push("/");
       })
       .catch(error => {
         alert("An error was submitted: " + error);
@@ -53,4 +53,4 @@ class SignInComponent extends Component {
   }
 }
 
-export default SignInComponent;
+export default withRouter(SignInComponent);

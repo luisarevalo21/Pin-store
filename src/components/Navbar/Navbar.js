@@ -9,8 +9,10 @@ import ProtectedRoute from '../ProtectedRoute';
 import Home from '../HomeComponent/HomeComponent';
 import Dashboard from '../../containers/DashBoardComponent/DashBoardComponent';
 const navbar = props => {
-  const dashboard = props.authenticated ? <NavLink to="/dashboard">Dashboard</NavLink> : null;
+  // const dashboard = props.authenticated ? <NavLink to="/dashboard">Dashboard</NavLink> : null;
+  const shoppingCart = props.authenticated ? <NavLink to="/shopping_cart">Shopping Cart</NavLink> : null;
   const logout = props.authenticated ? <LogOutComponent /> : null;
+  const account = props.authenticated ? null : <NavLink to="/account" activeStyle={{ backgroundColor: "red" }}>Account</NavLink>;
   return (
     <div>
       <Navbar sticky="top" collapseOnSelect expand="md">
@@ -27,20 +29,21 @@ const navbar = props => {
             <NavLink to="/store" activeStyle={{ backgroundColor: "red" }}>
               Store
             </NavLink>
-            <NavLink to="/contact" activeStyle={{ backgroundColor: "red" }}>
+            {<NavLink to="/contact" activeStyle={{ backgroundColor: "red" }}>
               Contact
-            </NavLink>
-
-            <NavLink to="/account" activeStyle={{ backgroundColor: "red" }}>
+            </NavLink>}
+            {account}
+            {/* <NavLink to="/account" activeStyle={{ backgroundColor: "red" }}>
               Account
-            </NavLink>
+            </NavLink> */}
             {/* <NavLink to="/signin" activeStyle={{ backgroundColor: "red" }}>
               Sign in
             </NavLink>
             <NavLink to="/signup" activeStyle={{ backgroundColor: "red" }}>
               Sign up
             </NavLink> */}
-            {dashboard}
+            {/* {dashboard} */}
+            {shoppingCart}
             {logout}
             {/* <NavLink to="/admin" activeStyle={{ backgroundColor: "red" }}>
             Admin
