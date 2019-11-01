@@ -14,8 +14,7 @@ import { Route, Switch } from "react-router-dom";
 import HeaderComponent from "./components/HeaderComponent/HeaderComponent";
 import DashBoardComponent from "./containers/DashBoardComponent/DashBoardComponent";
 import ShoppingCart from "./components/ShoppingCartComponent/ShoppingCartComponent";
-
-
+import ProtectedRoute from "./components/ProtectedRoute";
 // import { BrowserRouter } from "react-router-dom";
 
 class App extends Component {
@@ -42,17 +41,18 @@ class App extends Component {
   // }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged((authenticated) => {
+    firebase.auth().onAuthStateChanged(authenticated => {
       authenticated
         ? this.setState(() => ({
-            authenticated: true,
+            authenticated: true
           }))
         : this.setState(() => ({
-            authenticated: false,
+            authenticated: false
           }));
     });
   }
   render() {
+    console.log("this state", this.state);
     return (
       // <BrowserRouter>
       <div className="App">
@@ -74,7 +74,12 @@ class App extends Component {
 
           <Route path="/shopping_cart" component={ShoppingCart} />
 
-          <Route path="/dashboard" component={DashBoardComponent} />
+          {/* <Route path="/dashboard" component={DashBoardComponent} /> */}
+          <ProtectedRoute
+            authenticated={this.state.authenticated}
+            path="/dashboard"
+            component={DashBoardComponent}
+          />
         </Switch>
 
         <Footer />
