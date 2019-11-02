@@ -31,11 +31,12 @@ class SelectedItem extends Component {
     // console.
     const { title, type } = this.props.match.params;
 
-    // console.log("the id is", title);
-    const typeOfProduct = type + "s";
+    console.log("the id is", title);
+
+    console.log("the id is", type);
 
     axios
-      .get(`/${typeOfProduct}/${title}.json`)
+      .get(`/${type}/${title}.json`)
       .then(response => this.setState({ selectedItem: response.data }))
       .catch(error => console.log(error));
 
@@ -48,11 +49,11 @@ class SelectedItem extends Component {
     //   .then(response => this.setState({ selectedItem: response.data }))
     //   .catch(error => console.log(error));
 
-    storage
-      .child(`${title}.jpg`)
-      .getDownloadURL()
-      .then(url => this.setState({ selectedImage: url }))
-      .catch(error => console.log(error));
+    // storage
+    //   .child(`${title}.jpg`)
+    //   .getDownloadURL()
+    //   .then(url => this.setState({ selectedImage: url }))
+    //   .catch(error => console.log(error));
     // firebase
     //   .child("soraSticker.png")
     //   .getDownloadURL()
@@ -67,19 +68,19 @@ class SelectedItem extends Component {
   }
   render() {
     // console.log(this.props);
-    const { selectedItem, selectedImage } = this.state;
+    const { selectedItem } = this.state;
     // console.log(selectedImage);
-    // console.log(selectedItem);
+    console.log(selectedItem);
     let displayedItem = null;
-    if (this.state.selectedItem !== null && this.state.selectedImage !== null) {
+    if (this.state.selectedItem !== null) {
       // console.log("inside if");
       displayedItem = (
         <>
-          <img src={selectedImage} className={classes.Image} />
+          <img src={selectedItem.url} className={classes.Image} />
 
           <div className={classes.Card}>
             <h3>{selectedItem.title}</h3>
-            <p className={classes.Price}>{selectedItem.price}</p>
+            <p className={classes.Price}>${selectedItem.price}</p>
             <h3>Description</h3>
             <p>{selectedItem.description}</p>
           </div>
