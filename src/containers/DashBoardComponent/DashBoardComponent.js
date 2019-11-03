@@ -75,6 +75,8 @@ class DashBoardComponent extends Component {
             axios
               .patch(`/${this.state.item}.json`, { [this.state.title]: data })
               .then(response => {
+              	/* rerote to main after succesfull submitting*/
+              	this.props.history.push("/");
                 console.log(response);
               })
               .catch(error => console.log(error));
@@ -174,6 +176,8 @@ class DashBoardComponent extends Component {
 
           <input id="input" type="file" onChange={this.handleFileChange} />
           <button onClick={this.handleSubmit}>Submit</button>
+   //* I added this line*/       
+          <progress value={this.state.progress} max="0"/>
         </div>
       </div>
     );
