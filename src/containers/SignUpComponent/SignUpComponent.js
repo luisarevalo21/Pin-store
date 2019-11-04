@@ -86,31 +86,29 @@ class SignUpComponent extends Component {
         touched: false
       }
     },
-    formIsValid: false,
-    reenteredpassword: "",
-    error: null
+    formIsValid: false
+    // reenteredpassword: "",
+    // error: null
   };
 
   handleChange = (event, name) => {
     const formSubmissionCopy = { ...this.state.formSubmission };
 
-    const formElement = formSubmissionCopy[name];
+    const formElement = { ...formSubmissionCopy[name] };
 
     formElement.value = event.target.value;
     formElement.touched = true;
 
-    console.log("the value is ", formElement.value);
     formElement.valid = this.checkValdity(
       formElement.value,
       formElement.validation
     );
+    formSubmissionCopy[name] = formElement;
 
     let formIsValid = true;
     for (let element in formSubmissionCopy) {
       formIsValid = formSubmissionCopy[element].valid && formIsValid;
     }
-
-    formSubmissionCopy[name] = formElement;
 
     this.setState({
       formSubmission: formSubmissionCopy,

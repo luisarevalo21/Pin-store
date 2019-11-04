@@ -21,7 +21,7 @@ class SignInComponent extends Component {
         value: "",
         validation: {
           required: true,
-          minLength: 6
+          minLength: 5
         },
         type: "password",
         valid: false,
@@ -40,20 +40,21 @@ class SignInComponent extends Component {
 
     const submissionFormElement = { ...submissionFormCopy[name] };
     submissionFormElement.value = event.target.value;
+    submissionFormElement.touched = true;
 
     submissionFormElement.valid = this.checkValdity(
       submissionFormElement.value,
       submissionFormElement.validation
     );
-    submissionFormElement.touched = true;
-
-    let formIsValid = true;
-
-    for (let element in submissionFormCopy) {
-      formIsValid = submissionFormCopy[element].valid && formIsValid;
-    }
 
     submissionFormCopy[name] = submissionFormElement;
+    
+    let formIsValid = true;
+    for (let element in submissionFormCopy) {
+      formIsValid = submissionFormCopy[element].valid && formIsValid;
+
+      // console.log("for is valid ", formIsValid);
+    }
 
     this.setState({
       formSubmission: submissionFormCopy,
@@ -68,6 +69,7 @@ class SignInComponent extends Component {
     if (rules.required) {
       isValid = value.trim() !== "" && isValid;
     }
+
     if (rules.minLength) {
       isValid = value.length > rules.minLength && isValid;
     }
