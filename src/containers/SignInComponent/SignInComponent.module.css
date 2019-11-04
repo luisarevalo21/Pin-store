@@ -31,13 +31,23 @@
   margin: 0 auto;
   background-color: #ffc680 !important;
   color: black;
+  border-radius: 3px;
 }
-.Button:hover {
+/* .Button:hover {
   background-color: #914da8 !important;
-}
+} */
 
 @media (max-width: 500px) {
   .Layout {
     width: 80%;
   }
+}
+
+/* .Button {
+  color: black;
+  border-radius: 3px;
+} */
+.Button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
 }

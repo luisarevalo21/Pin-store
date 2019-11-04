@@ -11,14 +11,14 @@
   margin: 0 auto;
 }
 
-.Submission input {
+.Input {
   background-color: rgb(236, 236, 236);
   min-height: 20px;
   padding: 12px 15px;
   margin-bottom: 3%;
 }
 
-.Submission textarea {
+.TextArea {
   min-height: 100px;
   /* height: 100% !important; */
   background-color: rgb(236, 236, 236);
@@ -26,6 +26,31 @@
   padding: 12px 15px;
   border-radius: 5px;
 }
+.Submission input {
+  background-color: rgb(236, 236, 236);
+  min-height: 20px;
+  padding: 12px 15px;
+  margin-bottom: 3%;
+}
+
+/* .Submission textarea {
+  min-height: 100px;
+  /* height: 100% !important; */
+/* background-color: rgb(236, 236, 236);
+outline: none;
+padding: 12px 15px;
+border-radius: 5px; */
+
 .Dropdown {
   margin-bottom: 3%;
+}
+
+.Button {
+  color: black;
+  border-radius: 3px;
+  /* background-color: green; */
+}
+.Button:disabled {
+  cursor: not-allowed;
+  color: #ccc;
 }
