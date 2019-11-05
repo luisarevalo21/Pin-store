@@ -144,17 +144,25 @@ class SignUpComponent extends Component {
     const { email, password, reEnterPassword } = this.state.formSubmission;
     if (password.value === reEnterPassword.value) {
       console.log("passwords are the same");
-      // firebase
-      //   .auth()
-      //   .createUserWithEmailAndPassword(email.value, password.value)
-      //   .then(user => {
-      //     alert("You successfully Signed Up");
-      //     this.props.history.push("/");
-      //   })
-      //   .catch(error => {
-      //     alert("An error was submitted: " + error);
-      //     this.setState({ error: error });
-      //   });
+
+      //cahnge code if sign up doesnt work
+      firebase
+        .auth()
+        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then()
+        .then(user => {
+          alert("You successfully Signed Up");
+
+          this.props.history.push("/");
+
+          return firebase
+            .auth()
+            .createUserWithEmailAndPassword(email.value, password.value);
+        })
+        .catch(error => {
+          alert("An error was submitted: " + error);
+          this.setState({ error: error });
+        });
     } else {
       alert("Passwords don't match");
     }

@@ -48,7 +48,7 @@ class SignInComponent extends Component {
     );
 
     submissionFormCopy[name] = submissionFormElement;
-    
+
     let formIsValid = true;
     for (let element in submissionFormCopy) {
       formIsValid = submissionFormCopy[element].valid && formIsValid;
@@ -95,9 +95,13 @@ class SignInComponent extends Component {
 
     firebase
       .auth()
-      .signInWithEmailAndPassword(email.value, password.value)
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .then(user => {
         this.props.history.push("/");
+
+        return firebase
+          .auth()
+          .signInWithEmailAndPassword(email.value, password.value);
       })
       .catch(error => {
         alert("An error was submitted: " + error);
