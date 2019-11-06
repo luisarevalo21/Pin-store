@@ -4,6 +4,7 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import axios from "../../axios";
 import firebase from "../../firebase";
+import Spinner from 'react-bootstrap/Spinner'
 
 class DashBoardComponent extends Component {
   state = {
@@ -175,9 +176,11 @@ class DashBoardComponent extends Component {
           />
 
           <input id="input" type="file" onChange={this.handleFileChange} />
-          <button onClick={this.handleSubmit}>Submit</button>
-   //* I added this line*/       
-          <progress value={this.state.progress} max="0"/>
+          <button onClick={this.handleSubmit} className="btn btn-success btn-ladda-progress" dataStyle="expand-right">{this.state.progress}</button>
+         
+          <progress className="uploadProgress" value={this.state.progress} max="1.0"/>
+          
+
         </div>
       </div>
     );
