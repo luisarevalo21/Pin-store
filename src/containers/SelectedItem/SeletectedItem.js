@@ -3,8 +3,9 @@ import classes from "./SelectedItem.module.css";
 import axios from "../../axios";
 // import { withFirebase } from "../../Firebase/index";
 import firebase from "../../firebase";
+import ShopingCartComponent from "../../components/ShoppingCartComponent/ShoppingCartComponent";
 // import firebase from "../../config";
-
+import ShopListComponent from "../../components/ShopListItemComponent/ShopListItemComponent";
 // import imageAxios from "axios";
 
 // console.log(this.props);
@@ -66,6 +67,12 @@ class SelectedItem extends Component {
     //   .then(response => console.log(response))
     //   .catch(error => console.log(error));
   }
+
+  // handleSubmit = () => {
+  //   console.log("button pressed", this.state.selectedItem);
+
+  //   return <ShopingCartComponent item={this.state.selectedItem} />;
+  // };
   render() {
     // console.log(this.props);
     const { selectedItem } = this.state;
@@ -83,6 +90,9 @@ class SelectedItem extends Component {
             <p className={classes.Price}>${selectedItem.price}</p>
             <h3>Description</h3>
             <p>{selectedItem.description}</p>
+            <button onClick={() => this.props.AddItem(this.state.selectedItem)}>
+              Add to Cart
+            </button>
           </div>
         </>
       );

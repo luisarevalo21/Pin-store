@@ -19,9 +19,37 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 class App extends Component {
   state = {
-    authenticated: false
+    authenticated: false,
+    cart: [
+      {
+        description: "Disneys Pin Lot",
+        price: "6",
+        title: "Disneys Pin Lot",
+        type: "pins",
+        url:
+          "https://firebasestorage.googleapis.com/v0/b/twin-b…=media&token=1a581a7d-2440-41c3-a4d6-a5ea1862de48"
+      },
+      {
+        description: "Disneys Pin Lot",
+        price: "36",
+        title: "Disneys Pin Lot",
+        type: "pins",
+        url:
+          "https://firebasestorage.googleapis.com/v0/b/twin-b…=media&token=1a581a7d-2440-41c3-a4d6-a5ea1862de48"
+      }
+    ]
   };
 
+  AddItem = item => {
+    console.log("add item was pressed", item);
+    const copyState = { ...this.state };
+
+    if (!copyState.cart.includes(item)) {
+      copyState.cart.push(item);
+    }
+
+    this.setState({ cart: copyState.cart });
+  };
   // componentWillMount() {
   //   this.removeAuthListener = firebase.auth().onAuthStateChanged(user => {
   //     if (user) {
@@ -56,7 +84,10 @@ class App extends Component {
     return (
       // <BrowserRouter>
       <div className="App">
-        <Navbar authenticated={this.state.authenticated} />
+        <Navbar
+          authenticated={this.state.authenticated}
+          cartSize={this.state.cart.length}
+        />
         <HeaderComponent />
         <Switch>
           <Route path="/" exact component={HomeComponent} />
@@ -64,7 +95,11 @@ class App extends Component {
           <Route
             path="/store/:type/:title"
             exact
-            component={SelectedItemComponent}
+            render={props => (
+              <SelectedItemComponent AddItem={this.AddItem} {...props} />
+            )}
+            // component={SelectedItemComponent}
+            // AddItem={this.AddItem}
           />
           <Route path="/store" component={StoreComponent} />
           <Route path="/store/stickers" component={StoreComponent} />
@@ -72,7 +107,10 @@ class App extends Component {
           <Route path="/account" component={AccountComponent} />
           <Route path="/contact" component={Contact} />
 
-          <Route path="/shopping_cart" component={ShoppingCart} />
+          <Route
+            path="/cart"
+            render={props => <ShoppingCart cart={this.state.cart} />}
+          />
 
           {/* <Route path="/dashboard" component={DashBoardComponent} /> */}
           <ProtectedRoute

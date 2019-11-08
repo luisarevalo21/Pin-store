@@ -1,0 +1,35 @@
+.Item {
+  border: 3px solid black;
+  width: 50%;
+}
+.Border {
+  border: dotted 3px black;
+}
+.PriceInfo {
+  /* display: flex;
+  flex-direction: column;
+*/
+  justify-content: center;
+}
+.Row {
+  display: flex;
+}
+
+.Total {
+  font-weight: bold;
+  float: right;
+  text-align: left;
+  width: 50%;
+  padding-left: 3px;
+  margin: 0;
+  padding: 0;
+}
+
+.TotalText {
+  /* text-align: left;
+  align-items: left; */
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  /* justify-content: left; */
+}
