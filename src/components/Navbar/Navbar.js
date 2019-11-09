@@ -88,6 +88,7 @@ const navbar = props => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+
       {/* <Switch>
         {/* <Route exact path="/" component={Home} /> */}
       {/* <ProtectedRoute authenticated={props.authenticated} path="/dashboard" component={Dashboard} />
