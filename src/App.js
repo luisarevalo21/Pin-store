@@ -106,12 +106,12 @@ class App extends Component {
   render() {
     // console.log("this state", this.state);
 
-    const user = firebase.auth().currentUser;
+    // const user = firebase.auth().currentUser;
 
-    console.log("the user is", user);
-    if (this.state.authenticated) {
-      console.log(this);
-    }
+    // console.log("the user is", user);
+    // if (this.state.authenticated) {
+    //   console.log(this);
+    // }
 
     return (
       // <BrowserRouter>
@@ -149,12 +149,12 @@ class App extends Component {
               />
             )}
           />
-
-          <ProtectedRoute
+          <Route path="/account" component={AccountComponent} />
+          {/* <ProtectedRoute
             authenticated={!this.state.authenticated}
             path="/account"
             component={AccountComponent}
-          />
+          /> */}
           {/* <Route path="/dashboard" component={DashBoardComponent} /> */}
           <ProtectedRoute
             authenticated={this.state.authenticated}

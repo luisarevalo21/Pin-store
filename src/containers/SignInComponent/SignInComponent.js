@@ -4,6 +4,8 @@ import firebase, { provider } from "../../firebase";
 import { withRouter } from "react-router-dom";
 import InputComponent from "../../components/InputComponents/InputComponents";
 import { element } from "prop-types";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+
 class SignInComponent extends Component {
   state = {
     formSubmission: {
@@ -37,29 +39,36 @@ class SignInComponent extends Component {
     // error: null
   };
 
-  handleGoogleSignIn = () => {
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() => {
-        firebase
-          .auth()
-          .signInWithPopup(provider)
-          .then(result => {
-            console.log("the rrsult is", result.user);
-            // this.setState({ user: result.user });
-            this.props.history.push("/");
-          })
-          .catch(error => this.setState({ error }));
-      });
-    // firebase
-    //   .auth()
-    //   .signInWithPopup(provider)
-    //   .then(result => {
-    //     const user = result.user;
-    //     this.setState({ user });
-    //   });
+  uiConfig = {
+    signInFlow: "popup",
+    signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+    callbacks: {
+      signInSuccess: () => false
+    }
   };
+
+  // handleGoogleSignIn = () => {
+  //   firebase
+  //     .auth()
+  //     .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  //     .then(() => {
+  //       firebase
+  //         .auth()
+  //         .signInWithPopup(provider)
+  //         .then(result => {
+  //           console.log("the rrsult is", result.user);
+  //           // this.setState({ user: result.user });
+  //           this.props.history.push("/");
+  //         })
+  //         .catch(error => this.setState({ error }));
+  //     });
+  // firebase
+  //   .auth()
+  //   .signInWithPopup(provider)
+  //   .then(result => {
+  //     const user = result.user;
+  //     this.setState({ user });
+  //   });
 
   handleChange = (event, name) => {
     const submissionFormCopy = { ...this.state.formSubmission };
@@ -115,27 +124,27 @@ class SignInComponent extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const { email, password } = this.state.formSubmission;
-    console.log("the email is", email.value);
-    console.log("the password is", password.value);
+    // const { email, password } = this.state.formSubmission;
+    // console.log("the email is", email.value);
+    // console.log("the password is", password.value);
 
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() => {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(email.value, password.value)
-          .then(result => {
-            if (result.user) {
-              this.setState({ user: result.user });
-              this.props.history.push("/");
-            }
-          })
-          .catch(error => {
-            this.setState({ error: error });
-          });
-      });
+    // firebase
+    //   .auth()
+    //   .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    //   .then(() => {
+    //     firebase
+    //       .auth()
+    //       .signInWithEmailAndPassword(email.value, password.value)
+    //       .then(result => {
+    //         if (result.user) {
+    //           this.setState({ user: result.user });
+    //           this.props.history.push("/");
+    //         }
+    //       })
+    //       .catch(error => {
+    //         this.setState({ error: error });
+    //       });
+    // });
     // .catch(error => {
     //   // alert("An error was submitted: " + error);
     // });
@@ -161,17 +170,20 @@ class SignInComponent extends Component {
       />
     ));
 
-    console.log("this.state", this.state);
+    console.log("current suer", firebase.auth().currentUser);
+    // console.log("this.state", this.state);
     // console.log(formElementArray);
-    const googleButtonClasses = [classes.Google_Button, classes.GoogleButton];
+    // const googleButtonClasses = [classes.Google_Button, classes.GoogleButton];
 
     return (
-      <form className={classes.Layout} onSubmit={this.handleSubmit}>
-        {form}
-        <button className={classes.Button} disabled={!this.state.formIsValid}>
-          Sign In
-        </button>
-        <button
+      <>
+        {/* // <form className={classes.Layout} onSubmit={this.handleSubmit}> */}
+        <form className={classes.Layout}>
+          {form}
+          <button className={classes.Button} disabled={!this.state.formIsValid}>
+            Sign In
+          </button>
+          {/* <button
           onClick={this.handleGoogleSignIn}
           className={googleButtonClasses.join(" ")}
         >
@@ -180,8 +192,16 @@ class SignInComponent extends Component {
             alt="logo"
           />
           Login With Google
-        </button>
-      </form>
+        </button> */}
+
+          <StyledFirebaseAuth
+            uiConfig={this.uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+        </form>
+
+        {/* <button onClick={() => firebase.auth().signOut()}>Signout</button> */}
+      </>
     );
   }
 }
