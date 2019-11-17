@@ -1,27 +1,20 @@
 import React, { Component } from "react";
-import { render } from 'react-dom'
-import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
-import { useAlert } from 'react-alert'
+import { render } from "react-dom";
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+// import AlertTemplate from "react-alert-template-basic";
+import { useAlert } from "react-alert";
 import classes from "./DashBoardComponent.module.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import axios from "../../axios";
 import firebase from "../../firebase";
 
-import Spinner from 'react-bootstrap/Spinner'
-import $ from 'jquery'
-
-
+import Spinner from "react-bootstrap/Spinner";
+// import $ from "jquery";
 
 import InputComponent from "../../components/InputComponents/InputComponents";
 
 class DashBoardComponent extends Component {
-
-	
-  
-	
-
   state = {
     submissionForm: {
       title: {
@@ -196,9 +189,7 @@ class DashBoardComponent extends Component {
   // };
 
   handleSubmit = () => {
-
     const { file, item } = this.state;
-    
 
     // const { item } = this.state;
     const formData = {};
@@ -244,9 +235,6 @@ class DashBoardComponent extends Component {
             this.setState({ url });
           })
           .then(() => {
-
-           
-            
             const data = {
               title: this.state.title,
               description: this.state.title,
@@ -261,21 +249,19 @@ class DashBoardComponent extends Component {
             axios
               .post(`/${formData.dropdown}.json`, formData)
               .then(response => {
-                    const options = {
-  	       // you can also just use 'bottom center'
-  		       position: positions.BOTTOM_CENTER,
-  		       timeout: 5000,
-  		       offset: '30px',
-  	          // you can also just use 'scale'
-  		      transition: transitions.SCALE
-	        };
-	                
+                const options = {
+                  // you can also just use 'bottom center'
+                  position: positions.BOTTOM_CENTER,
+                  timeout: 5000,
+                  offset: "30px",
+                  // you can also just use 'scale'
+                  transition: transitions.SCALE
+                };
 
-              	alert("File succesfully uploaded");
-        
+                alert("File succesfully uploaded");
 
-              	/* rerote to main after succesfull submitting*/
-              	this.props.history.push("/");
+                /* rerote to main after succesfull submitting*/
+                this.props.history.push("/");
 
                 console.log(response);
               })
@@ -383,6 +369,21 @@ class DashBoardComponent extends Component {
           >
             Submit
           </button>
+
+          {/* <input id="input" type="file" onChange={this.handleFileChange} /> */}
+          {/* <button
+            onClick={this.handleSubmit}
+            className="btn btn-success btn-ladda-progress"
+            datastyle="expand-right"
+          >
+            Submit {this.state.progress}
+          </button> */}
+
+          <progress
+            className="uploadProgress"
+            value={this.state.progress}
+            max="1.0"
+          />
         </div>
       </div>
     );
@@ -390,67 +391,3 @@ class DashBoardComponent extends Component {
 }
 
 export default DashBoardComponent;
-
-{
-  /* <input
-            onChange={e => this.handleChange(e, "title")}
-            placeholder="Title"
-            type="text"
-            className={inputClasses}
-          /> */
-}
-{
-  /* <InputComponent
-            type="input"
-            changed={e => this.handleChange(e, "title")}
-            invalid={!this.state.submissionForm.title.valid}
-            touched={this.state.submissionForm.title.touched}
-          /> */
-}
-
-{
-  /* <input
-            onChange={e => this.handleChange(e, "price")}
-            placeholder="Price"
-            type="number"
-          /> */
-}
-
-{
-  /* <Dropdown
-            value={this.state.item}
-            onChange={e => this.handleItemChange(e, "item")}
-            placeholder="Select an option"
-            className={classes.Dropdown}
-          /> */
-}
-
-{
-  /* <textarea
-            onChange={e => this.handleChange(e, "description")}
-            placeholder="description"
-            type="text"
-            className={classes.TextArea}
-
-            // style={{ minHeight: "100px" }}
-          /> */
-}
-
-
-          <input id="input" type="file" onChange={this.handleFileChange} />
-          <button onClick={this.handleSubmit} className="btn btn-success btn-ladda-progress" datastyle="expand-right">Submit {this.state.progress}</button>
-         
-          <progress className="uploadProgress" value={this.state.progress} max="1.0"/>
-          
-          
-
-        </div>
-      </div>
-    );
-  }
-}
-
-
-
-export default DashBoardComponent;
-
