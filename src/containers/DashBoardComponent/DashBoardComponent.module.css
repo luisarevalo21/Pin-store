@@ -1,3 +1,7 @@
+progress{
+  visibility: false;
+}
+
 .Layout {
   display: flex;
   margin-bottom: 3%;
