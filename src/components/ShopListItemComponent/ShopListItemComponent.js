@@ -8,6 +8,7 @@ const shopListItemComponent = props => (
 
     <div className={classes.PriceBox}>
       <p className={classes.Price}>{props.price}</p>
+      <button onClick={props.delete}> delete</button>
     </div>
 
     {/* <button>x</button> */}

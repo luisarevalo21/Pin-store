@@ -180,20 +180,24 @@ class DashBoardComponent extends Component {
   // };
 
   handleSubmit = () => {
-    const { item } = this.state;
+    // const { item } = this.state;
     const formData = {};
     for (let formIdenifier in this.state.submissionForm) {
       formData[formIdenifier] = this.state.submissionForm[formIdenifier].value;
     }
-    formData.type = item;
 
-    console.log(formData);
+    const folderName = formData.dropdown;
+
+    formData.price = Number(formData.price).toFixed(2);
+
+    // console.log("formdata value is ", formData["price"].value);
+
     // if (title !== "" && description !== "" && price > 0 && url !== null) {
     const storage = firebase.storage();
-    let fetchedUrl;
+    // let fetchedUrl;
     //can change to folder name depending on item selected /pins etc
     const uploadTask = storage
-      .ref(`/images/${item}/${formData.file.name}`)
+      .ref(`/images/${folderName}/${formData.file.name}`)
       .put(formData.file);
     uploadTask.on(
       "state_changed",
@@ -211,7 +215,7 @@ class DashBoardComponent extends Component {
 
       () => {
         storage
-          .ref(`/images/${formData.type}`)
+          .ref(`/images/${folderName}`)
           .child(formData.file.name)
           .getDownloadURL()
           .then(url => {
@@ -221,11 +225,9 @@ class DashBoardComponent extends Component {
           .then(() => {
             formData.url = this.state.url;
 
-            console.log("data before push", formData);
+            // console.log("data before push", formData.dropdown);
             axios
-              .patch(`/${formData.type}.json`, {
-                [this.state.submissionForm.title.value]: formData
-              })
+              .post(`/${formData.dropdown}.json`, formData)
               .then(response => {
                 console.log(response);
               })
@@ -234,32 +236,33 @@ class DashBoardComponent extends Component {
           .catch(error => console.log(error));
       }
     );
-    // }
-    // console.log("this.state", this.state.errors);
-    // console.log("enter values");
-    // console.log("fetched url is", this.state.url);
-    // const data = {
-    //   title: this.state.title,
-    //   description: this.state.title,
-    //   price: this.state.price,
-    //   type: this.state.item,
-    //   id: this.state.title,
-    //   url: fetchedUrl
-    // };
-    // axios
-    //   .patch(`/${this.state.item}.json`, { [this.state.title]: data })
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(error => console.log(error));
-    // .then(response => console.log(response))
-    // .catch(error => console.log(error));
-    // uploadTask.on();
-    // upLoadTask.on("state changed", snapshot => {
-    //   console.log("snapshot is", snapshot);
-    // });
-    // const database = firebase.database();
   };
+
+  // }
+  // console.log("this.state", this.state.errors);
+  // console.log("enter values");
+  // console.log("fetched url is", this.state.url);
+  // const data = {
+  //   title: this.state.title,
+  //   description: this.state.title,
+  //   price: this.state.price,
+  //   type: this.state.item,
+  //   id: this.state.title,
+  //   url: fetchedUrl
+  // };
+  // axios
+  //   .patch(`/${this.state.item}.json`, { [this.state.title]: data })
+  //   .then(response => {
+  //     console.log(response);
+  //   })
+  //   .catch(error => console.log(error));
+  // .then(response => console.log(response))
+  // .catch(error => console.log(error));
+  // uploadTask.on();
+  // upLoadTask.on("state changed", snapshot => {
+  //   console.log("snapshot is", snapshot);
+  // });
+  // const database = firebase.database();
 
   // validateForm = errors => {
   //   let valid = true;

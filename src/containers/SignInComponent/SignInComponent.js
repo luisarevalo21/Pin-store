@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import classes from "./SignInComponent.module.css";
-import firebase from "../../firebase";
+import firebase, { provider } from "../../firebase";
 import { withRouter } from "react-router-dom";
 import InputComponent from "../../components/InputComponents/InputComponents";
 import { element } from "prop-types";
@@ -28,11 +28,37 @@ class SignInComponent extends Component {
         touched: false
       }
     },
-    formIsValid: false
+    formIsValid: false,
+
+    error: null
 
     // email: "",
     // password: "",
     // error: null
+  };
+
+  handleGoogleSignIn = () => {
+    firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => {
+        firebase
+          .auth()
+          .signInWithPopup(provider)
+          .then(result => {
+            console.log("the rrsult is", result.user);
+            // this.setState({ user: result.user });
+            this.props.history.push("/");
+          })
+          .catch(error => this.setState({ error }));
+      });
+    // firebase
+    //   .auth()
+    //   .signInWithPopup(provider)
+    //   .then(result => {
+    //     const user = result.user;
+    //     this.setState({ user });
+    //   });
   };
 
   handleChange = (event, name) => {
@@ -96,17 +122,23 @@ class SignInComponent extends Component {
     firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(user => {
-        this.props.history.push("/");
-
-        return firebase
+      .then(() => {
+        firebase
           .auth()
-          .signInWithEmailAndPassword(email.value, password.value);
-      })
-      .catch(error => {
-        alert("An error was submitted: " + error);
-        this.setState({ error: error });
+          .signInWithEmailAndPassword(email.value, password.value)
+          .then(result => {
+            if (result.user) {
+              this.setState({ user: result.user });
+              this.props.history.push("/");
+            }
+          })
+          .catch(error => {
+            this.setState({ error: error });
+          });
       });
+    // .catch(error => {
+    //   // alert("An error was submitted: " + error);
+    // });
   };
   render() {
     // const { email, password, error } = this.state;
@@ -131,12 +163,23 @@ class SignInComponent extends Component {
 
     console.log("this.state", this.state);
     // console.log(formElementArray);
+    const googleButtonClasses = [classes.Google_Button, classes.GoogleButton];
 
     return (
       <form className={classes.Layout} onSubmit={this.handleSubmit}>
         {form}
         <button className={classes.Button} disabled={!this.state.formIsValid}>
           Sign In
+        </button>
+        <button
+          onClick={this.handleGoogleSignIn}
+          className={googleButtonClasses.join(" ")}
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+            alt="logo"
+          />
+          Login With Google
         </button>
       </form>
     );

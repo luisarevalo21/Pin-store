@@ -223,7 +223,10 @@ class StoreComponent extends Component {
         // let { pins, stickers } = this.state;
         const combined = { ...pins, ...stickers };
         keys = Object.keys(combined);
+
+        // console.log("the keys are", keys);
         items = keys.map(element => {
+          // console.log("the element is", element);
           return (
             <CardComponent
               clicked={() =>
@@ -232,7 +235,7 @@ class StoreComponent extends Component {
                   combined[element].type
                 )
               }
-              key={Math.random()}
+              key={element}
               title={combined[element].title}
               image={combined[element].url}
               // image={link}
@@ -258,7 +261,7 @@ class StoreComponent extends Component {
               clicked={() =>
                 this.handleClick(pins[element].title, pins[element].type)
               }
-              key={Math.random()}
+              key={element}
               title={pins[element].title}
               image={pins[element].url}
               // image={link}
@@ -287,7 +290,7 @@ class StoreComponent extends Component {
                   stickers[element].type
                 )
               }
-              key={Math.random()}
+              key={element}
               title={stickers[element].title}
               image={stickers[element].url}
               // image={link}

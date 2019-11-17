@@ -9,8 +9,14 @@ class Logout extends Component {
   };
 
   logoutUser = () => {
-    firebase.auth().signOut();
-    this.setState({ redirect: true });
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log("log out was sucessful");
+        this.setState({ redirect: true });
+      })
+      .catch(error => console.log("error occured"));
   };
   render() {
     if (this.state.redirect) {

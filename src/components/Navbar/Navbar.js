@@ -18,6 +18,7 @@ const navbar = props => {
   const authenticatedData = props.authenticated ? (
     <>
       {/* <NavLink to="/shopping_cart">Shopping Cart</NavLink> */}
+
       <NavLink to="/dashboard" activeStyle={{ backgroundColor: "red" }}>
         Dashboard
       </NavLink>

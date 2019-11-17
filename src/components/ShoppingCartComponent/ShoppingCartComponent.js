@@ -3,36 +3,79 @@ import ShopListItemComponent from "../ShopListItemComponent/ShopListItemComponen
 import classes from "./ShoppingCartComponent.module.css";
 class ShopingCartComponent extends Component {
   state = {
-    cart: [],
+    cart: this.props.cart,
     itemTotal: null
   };
 
   // componentDidMount() {
   //   console.log(this.props);
   // }
+
+  // componentDidMount() {
+  //   this.setState({ cart: this.props.cart });
+  // }
+  // componentDidUpdate() {
+  //   // this.props.cart = this.state.cart;
+  // }
+
+  // componentDidUpdate() {}
+  Checkout = () => {
+    console.log("checkout was pressed");
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    console.log("inside get dervied");
+    if (props.cart.length !== state.cart.length) {
+      console.log("inside if statement");
+      return {
+        cart: props.cart
+      };
+    }
+    return null;
+  }
+  // deleteItem = key => {
+  //   const copyCart = [...this.state.cart];
+
+  //   //may need to adjust after adding ids
+  //   const removedItem = copyCart.filter(element => element.title !== key);
+  //   // console.log("remoed item", removedItem);
+  //   // console.log("copy cart is", copyCart);
+  //   // copyCart.filter(elemn)
+  //   // const removedItem = copyCart.filter(element => console.log(
+
+  //   // ));
+  //   // console.log(key);
+  //   // console.log("delete itemw as pressed");
+
+  //   this.setState({ cart: removedItem });
+  // };
   render() {
     let itemTotal = 0;
-    let items = this.props.cart.map(element => {
-      itemTotal += Number(element.price);
-      return (
-        <ShopListItemComponent
-          key={element.title}
-          image={element.url}
-          title={element.title}
-          price={"$" + element.price + ".00"}
-        />
-      );
-    });
+    let items = <h3>Your cart is empty</h3>;
+    if (this.state.cart.length !== 0) {
+      items = this.state.cart.map(element => {
+        itemTotal += Number(element.price);
+        return (
+          <ShopListItemComponent
+            key={element.title}
+            image={element.url}
+            title={element.title}
+            price={"$" + element.price}
+            delete={() => this.props.delete(element.title)}
+          />
+        );
+      });
+    }
 
     return (
-      <div>
+      <>
         <h3>Your Shopping Cart</h3>
+        <div style={{ display: "flex" }}>
+          <div className={classes.Item}>
+            {items}
+            <hr className={classes.Border}></hr>
 
-        <div className={classes.Item}>
-          {items}
-          <hr className={classes.Border}></hr>
-
-          <div className={classes.PriceInfo}>
+            {/* <div className={classes.PriceInfo}> */}
             {/* <div> content left</div>
 
             <div className={classes.Total}> */}
@@ -41,16 +84,22 @@ class ShopingCartComponent extends Component {
               <span className={classes.Total}>${itemTotal}.00</span>
             </div>
             <div className={classes.Row}>
-              <p className={classes.TotalText}>Items Total: </p>
+              <p className={classes.TotalText}>Tax: </p>
               <span className={classes.Total}>$0.00</span>
             </div>
             <div className={classes.Row}>
-              <p className={classes.TotalText}>Items Total: </p>
+              <p className={classes.TotalText}>Total: </p>
               <span className={classes.Total}>${itemTotal}.00</span>
             </div>
           </div>
+          <div className={classes.Checkout}>
+            <h4>Cart Total</h4>
+            <p>${itemTotal}</p>
+            <button onClick={this.Checkout}>Checkout</button>
+          </div>
+          {/* </div> */}
         </div>
-      </div>
+      </>
     );
   }
 }
