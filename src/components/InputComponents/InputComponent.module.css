@@ -1,0 +1,25 @@
+.Input {
+  background-color: rgb(236, 236, 236);
+  min-height: 30px;
+  padding: 12px 15px;
+  margin-bottom: 3%;
+  border-radius: 3px;
+}
+
+.Invalid {
+  border: 1px solid red;
+  background-color: salmon;
+}
+
+.TextArea {
+  /* height: 100% !important; */
+  min-height: 100px;
+  background-color: rgb(236, 236, 236);
+  outline: none;
+  padding: 12px 15px;
+  border-radius: 5px;
+}
+
+.Dropdown {
+  margin-bottom: 3%;
+}

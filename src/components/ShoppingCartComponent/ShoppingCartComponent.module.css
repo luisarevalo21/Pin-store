@@ -1,0 +1,54 @@
+.Item {
+  border: 3px solid black;
+  width: 50%;
+  margin: 10px;
+  padding: 20px;
+}
+.Border {
+  border: dotted 3px black;
+}
+.PriceInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.Row {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  justify-content: center;
+}
+
+.Total {
+  font-weight: bold;
+  float: right;
+  /* text-align: left; */
+  width: 50%;
+  padding-left: 3px;
+  margin: 0;
+  padding: 0;
+}
+
+.TotalText {
+  text-align: left;
+  float: right;
+  margin: 0;
+
+  /* text-align: left;
+  align-items: left; */
+  /* margin: 0;
+  padding: 0;
+  text-align: left; */
+  /* justify-content: left; */
+}
+
+.Checkout {
+  width: 30%;
+  height: 40%;
+  border: 2px black solid;
+  padding: 20px;
+
+  margin: 0 auto;
+  /* margin: 20px; */
+  border-radius: 3px;
+}
