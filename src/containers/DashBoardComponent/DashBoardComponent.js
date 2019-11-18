@@ -1,24 +1,21 @@
 import React, { Component } from "react";
 import { render } from 'react-dom'
-import { transitions, positions, Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
-import { useAlert } from 'react-alert'
 import classes from "./DashBoardComponent.module.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import axios from "../../axios";
 import firebase from "../../firebase";
-import Spinner from 'react-bootstrap/Spinner'
-import $ from 'jquery'
+import ModalComponent from "../../components/Modal/ModalComponent"
+//import { useAlert } from 'react-alert'
+
+
 
 
 
 
 class DashBoardComponent extends Component {
 
-	
   
-	
 
   state = {
     title: "",
@@ -28,8 +25,13 @@ class DashBoardComponent extends Component {
     file: null,
     url: null,
     item: "",
+    
+    
+
     options: ["pins", "stickers", "phone grips", "temporary tattoos"]
   };
+
+  
 
   handleChange = (event, name) => {
     console.log("event is", event);
@@ -49,12 +51,19 @@ class DashBoardComponent extends Component {
 
   handleSubmit = () => {
     const { file, item } = this.state;
-    
+    //const alert = useAlert();
     const storage = firebase.storage();
     let fetchedUrl;
     //can change to folder name depending on item selected /pins etc
     const uploadTask = storage.ref(`/images/${item}/${file.name}`).put(file);
+    
+    const showAlert = () =>{
+      return <ModalComponent />;
+    }
+    
+    
 
+  
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -78,7 +87,7 @@ class DashBoardComponent extends Component {
             this.setState({ url });
           })
           .then(() => {
-           
+
             
             const data = {
               title: this.state.title,
@@ -88,26 +97,24 @@ class DashBoardComponent extends Component {
               url: this.state.url
             };
 
+            
             axios
               .patch(`/${this.state.item}.json`, { [this.state.title]: data })
               .then(response => {
-                    const options = {
-  	       // you can also just use 'bottom center'
-  		       position: positions.BOTTOM_CENTER,
-  		       timeout: 5000,
-  		       offset: '30px',
-  	          // you can also just use 'scale'
-  		      transition: transitions.SCALE
-	        };
-	                
+                
+                 
+                  
+                
 
-              	alert("File succesfully uploaded");
-        
-
+              	
+                //const alert = useAlert();
               	/* rerote to main after succesfull submitting*/
-              	this.props.history.push("/");
+              	showAlert();
+                //alert("File succesfully uploaded");
+                this.props.history.push("/store");
+                //return <ModalComponent />;
 
-                console.log(response);
+                //console.log(response);
               })
               .catch(error => console.log(error));
           })
@@ -170,6 +177,7 @@ class DashBoardComponent extends Component {
 
   render() {
     const { state } = this;
+    
     console.log("the state is", state);
     return (
       <div className={classes.Layout}>
@@ -203,7 +211,7 @@ class DashBoardComponent extends Component {
             type="text"
             // style={{ minHeight: "100px" }}
           />
-
+          
           <input id="input" type="file" onChange={this.handleFileChange} />
           <button onClick={this.handleSubmit} className="btn btn-success btn-ladda-progress" datastyle="expand-right">Submit {this.state.progress}</button>
          

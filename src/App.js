@@ -16,6 +16,7 @@ import DashBoardComponent from "./containers/DashBoardComponent/DashBoardCompone
 import ShoppingCart from "./components/ShoppingCartComponent/ShoppingCartComponent";
 import ProtectedRoute from "./components/ProtectedRoute";
 // import { BrowserRouter } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   state = {
@@ -71,7 +72,6 @@ class App extends Component {
           <Route path="/store/pins" component={StoreComponent} />
           <Route path="/account" component={AccountComponent} />
           <Route path="/contact" component={Contact} />
-
           <Route path="/shopping_cart" component={ShoppingCart} />
 
           {/* <Route path="/dashboard" component={DashBoardComponent} /> */}

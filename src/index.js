@@ -2,16 +2,33 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+//import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+//import AlertTemplate from 'react-alert-template-basic'
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 // import Firebase, { FirebaseContext } from "./Firebase/index";
 
+/*
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  offset: '30px',
+  // you can also just use 'scale'
+  transition: transitions.SCALE
+}*/
+
+
 ReactDOM.render(
-  // <FirebaseContext.Provider value={new Firebase()}>
+  //<AlertProvider template={AlertTemplate} {...options}>
+  
   <BrowserRouter>
+  
     <App />
   </BrowserRouter>,
-  // </FirebaseContext.Provider>,
+   
+  
+  //</AlertProvider>,
   document.getElementById("root")
 );
 
