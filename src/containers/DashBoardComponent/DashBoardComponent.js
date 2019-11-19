@@ -8,12 +8,70 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import axios from "../../axios";
 import firebase from "../../firebase";
-
+import PopupComponent from "../../components/PopUpComponent/PopUpComponent";
 import Spinner from "react-bootstrap/Spinner";
 // import $ from "jquery";
 
 import InputComponent from "../../components/InputComponents/InputComponents";
+const intialState = {
+  submissionForm: {
+    title: {
+      value: "",
+      validation: {
+        required: true,
+        minLength: 5
+      },
+      type: "input",
+      valid: false,
+      touched: false
+    },
 
+    price: {
+      value: "",
+      validation: {
+        required: true,
+        minValue: 0
+      },
+      type: "price",
+      valid: false,
+      touched: false
+    },
+    description: {
+      value: "",
+      validation: {
+        required: true
+      },
+      type: "textarea",
+      valid: false,
+      touched: false
+    },
+
+    dropdown: {
+      value: "",
+      validation: {
+        required: true
+      },
+      type: "dropdown",
+      valid: false,
+      touched: false
+    },
+
+    file: {
+      value: "",
+      validation: {
+        type: "image/jpeg"
+      },
+      valid: false,
+      touched: false,
+      type: "file"
+    }
+  },
+
+  url: null,
+  formIsValid: false,
+  item: "",
+  posting: false
+};
 class DashBoardComponent extends Component {
   state = {
     submissionForm: {
@@ -70,7 +128,9 @@ class DashBoardComponent extends Component {
     },
     url: null,
     formIsValid: false,
-    item: ""
+    item: "",
+    posting: false
+
     // errors: {
     //   title: "",
     //   description: "",
@@ -188,6 +248,26 @@ class DashBoardComponent extends Component {
   //   this.setState({ [name]: event.value });
   // };
 
+  clearState = () => {
+    // const copyState = { ...this.state.submissionForm };
+    // // console.log("copy state", copyState);
+    // for (let id in copyState) {
+    //   let data = (copyState[id].value = "");
+    //   copyState[id] = data;
+    //   // console.log("the id is", (copyState[id].value = ""));
+    // }
+
+    // console.log("copy state", copyState);
+    this.setState(intialState);
+  };
+  handleCompletion = () => {
+    console.log("button was pressed");
+    this.props.history.push("/");
+  };
+
+  handleNewSubmission = () => {
+    this.props.history.push("/dashboard");
+  };
   handleSubmit = () => {
     const { file, item } = this.state;
 
@@ -218,57 +298,60 @@ class DashBoardComponent extends Component {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        this.setState({ progress });
+        this.setState({ progress, posting: true });
       },
       error => {
         // Error function ...
         console.log(error);
-      },
-
-      () => {
-        storage
-          .ref(`/images/${folderName}`)
-          .child(formData.file.name)
-          .getDownloadURL()
-          .then(url => {
-            // console.log("the url is", url);
-            this.setState({ url });
-          })
-          .then(() => {
-            const data = {
-              title: this.state.title,
-              description: this.state.title,
-              price: this.state.price,
-              type: this.state.item,
-              url: this.state.url
-            };
-
-            formData.url = this.state.url;
-
-            // console.log("data before push", formData.dropdown);
-            axios
-              .post(`/${formData.dropdown}.json`, formData)
-              .then(response => {
-                const options = {
-                  // you can also just use 'bottom center'
-                  position: positions.BOTTOM_CENTER,
-                  timeout: 5000,
-                  offset: "30px",
-                  // you can also just use 'scale'
-                  transition: transitions.SCALE
-                };
-
-                alert("File succesfully uploaded");
-
-                /* rerote to main after succesfull submitting*/
-                this.props.history.push("/");
-
-                console.log(response);
-              })
-              .catch(error => console.log(error));
-          })
-          .catch(error => console.log(error));
       }
+
+      // this.setState({ completed: true })
+      // () => {
+      //   storage
+      //     .ref(`/images/${folderName}`)
+      //     .child(formData.file.name)
+      //     .getDownloadURL()
+      //     .then(url => {
+      //       // console.log("the url is", url);
+      //       this.setState({ url });
+      //     })
+      //     .then(() => {
+      //       const data = {
+      //         title: this.state.title,
+      //         description: this.state.title,
+      //         price: this.state.price,
+      //         type: this.state.item,
+      //         url: this.state.url
+      //       };
+
+      //       formData.url = this.state.url;
+
+      //       // console.log("data before push", formData.dropdown);
+      //       axios
+      //         .post(`/${formData.dropdown}.json`, formData)
+      //         .then(response => {
+
+      // this.setState({completed:true})
+      //           // const options = {
+      //           //   // you can also just use 'bottom center'
+      //           //   position: positions.BOTTOM_CENTER,
+      //           //   timeout: 5000,
+      //           //   offset: "30px",
+      //           //   // you can also just use 'scale'
+      //           //   transition: transitions.SCALE
+      //           // };
+
+      //           // alert("File succesfully uploaded");
+
+      //           /* rerote to main after succesfull submitting*/
+      //           this.props.history.push("/");
+
+      //           console.log(response);
+      //         })
+      //         .catch(error => console.log(error));
+      //     })
+      //     .catch(error => console.log(error));
+      //}
     );
   };
 
@@ -334,7 +417,19 @@ class DashBoardComponent extends Component {
 
   render() {
     const { submissionForm } = this.state;
+    let loadModual = null;
 
+    console.log("the state is ", this.state);
+    if (this.state.posting) {
+      loadModual = (
+        <PopupComponent
+          posting={this.state.posting}
+          progress={this.state.progress}
+          completed={this.handleCompletion}
+          reset={this.handleNewSubmission}
+        />
+      );
+    }
     const formElementArray = [];
 
     for (let key in this.state.submissionForm) {
@@ -362,6 +457,8 @@ class DashBoardComponent extends Component {
         <div className={classes.Submission} onSubmit={this.handleSubmit}>
           <h4>Submit new entry </h4>
           {form}
+
+          <button onClick={this.clearState}>clear</button>
           <button
             onClick={this.handleSubmit}
             disabled={!this.state.formIsValid}
@@ -378,12 +475,15 @@ class DashBoardComponent extends Component {
           >
             Submit {this.state.progress}
           </button> */}
+          {/* <Alert /> */}
 
-          <progress
+          {loadModual}
+          {/* <PopupComponent clicked={this.state.posting} /> */}
+          {/* <progress
             className="uploadProgress"
             value={this.state.progress}
             max="1.0"
-          />
+          /> */}
         </div>
       </div>
     );
