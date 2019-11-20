@@ -7,12 +7,13 @@ import {
   MDBModalHeader,
   MDBModalFooter
 } from "mdbreact";
+
 const popUpComponent = props => {
   console.log("progress is", props.progress);
   return (
     <MDBContainer>
       {/* <MDBBtn>Modal</MDBBtn> */}
-      <MDBModal isOpen={props.posting}>
+      <MDBModal isOpen={props.posting} toggle={props.handleToggle}>
         <MDBModalHeader>MDBModal title</MDBModalHeader>
         <MDBModalBody>
           {props.progress >= 100 ? (
@@ -26,11 +27,14 @@ const popUpComponent = props => {
               </MDBBtn>
             </div>
           ) : (
-            <progress
-              className="uploadProgress"
-              value={props.progress}
-              max="1.0"
-            />
+            <>
+              <h3>Sending data...</h3>
+              <progress
+                className="uploadProgress"
+                value={props.progress}
+                max="1.0"
+              />
+            </>
           )}
         </MDBModalBody>
       </MDBModal>

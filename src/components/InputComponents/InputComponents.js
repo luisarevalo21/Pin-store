@@ -21,6 +21,7 @@ const inputComponent = props => {
           onChange={props.changed}
           placeholder="title"
           type="text"
+          value={props.value}
           className={inputClasses.join(" ")}
         />
       );
@@ -34,7 +35,7 @@ const inputComponent = props => {
           placeholder="description"
           type="text"
           className={inputClasses.join(" ")}
-
+          value={props.value}
           // style={{ minHeight: "100px" }}
         />
       );
@@ -42,6 +43,7 @@ const inputComponent = props => {
 
     case "file":
       inputClasses.push(classes.Input);
+      console.log("the filed added is", props.value);
       input = (
         <input
           type="file"
@@ -59,6 +61,7 @@ const inputComponent = props => {
           placeholder="0.00"
           type="number"
           step=".01"
+          value={props.value}
           className={inputClasses.join(" ")}
         />
       );
@@ -86,6 +89,7 @@ const inputComponent = props => {
             type="email"
             // name="email"
             placeholder="email"
+            value={props.value}
             // value={email}
             onChange={props.changed}
             className={inputClasses.join(" ")}
@@ -106,6 +110,7 @@ const inputComponent = props => {
             className={inputClasses.join(" ")}
             placeholder="password"
             onChange={props.changed}
+            value={props.value}
             // name="password"
             // value={email}
           />
@@ -124,6 +129,7 @@ const inputComponent = props => {
             className={inputClasses.join(" ")}
             placeholder="confirm password"
             onChange={props.changed}
+            value={props.value}
             // name="password"
             // value={email}
           />
