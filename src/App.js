@@ -139,28 +139,8 @@ class App extends Component {
           <Route path="/store/pins" component={StoreComponent} />
           {/* <Route path="/account" component={AccountComponent} /> */}
           <Route path="/contact" component={Contact} />
-<<<<<<< HEAD
           <Route path="/shopping_cart" component={ShoppingCart} />
 
-=======
-
-          <Route
-            path="/cart"
-            render={props => (
-              <ShoppingCart
-                cart={this.state.cart}
-                user={this.state.user}
-                delete={item => this.deleteItem(item)}
-              />
-            )}
-          />
-          <Route path="/account" component={AccountComponent} />
-          {/* <ProtectedRoute
-            authenticated={!this.state.authenticated}
-            path="/account"
-            component={AccountComponent}
-          /> */}
->>>>>>> 6b645f90d85659a3f1f2e434a02b8cad75819766
           {/* <Route path="/dashboard" component={DashBoardComponent} /> */}
           <ProtectedRoute
             authenticated={this.state.authenticated}
