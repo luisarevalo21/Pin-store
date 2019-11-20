@@ -49,6 +49,8 @@ const inputComponent = props => {
           type="file"
           onChange={props.changed}
           className={inputClasses.join(" ")}
+          key={props.myKey}
+          // ref={props.myRef}
         />
       );
       break;

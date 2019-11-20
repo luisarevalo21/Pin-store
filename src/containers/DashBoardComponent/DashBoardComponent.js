@@ -64,7 +64,8 @@ const intialState = {
       },
       valid: false,
       touched: false,
-      type: "file"
+      type: "file",
+      lastPdfAddTime: ""
     }
   },
 
@@ -125,7 +126,8 @@ class DashBoardComponent extends Component {
         },
         valid: false,
         touched: false,
-        type: "file"
+        type: "file",
+        lastPdfAddTime: ""
       }
     },
     url: null,
@@ -178,9 +180,11 @@ class DashBoardComponent extends Component {
 
     const submissionFormElement = { ...submissionFormCopy[name] };
 
+    console.log("THE EVENT IS", event.timeStamp);
     // console.log(event.target.value[0]);
     if (name === "file") {
       submissionFormElement.value = event.target.files[0];
+      submissionFormElement.lastPdfAddTime = event.timeStamp;
     } else if (name === "dropdown") {
       submissionFormElement.value = event.value;
     } else {
@@ -252,7 +256,7 @@ class DashBoardComponent extends Component {
   //   this.setState({ [name]: event.value });
   // };
 
-  clearState = () => {
+  clearState = event => {
     console.log("clear the state");
     this.setState(intialState);
   };
@@ -261,7 +265,7 @@ class DashBoardComponent extends Component {
     this.props.history.push("/");
   };
 
-  handleNewSubmission = () => {
+  handleNewSubmission = event => {
     this.setState({ posting: false });
     this.clearState();
   };
@@ -269,7 +273,7 @@ class DashBoardComponent extends Component {
   // handleToggle = () => {
   //   this.handleNewSubmission();
   // };
-  handleSubmit = () => {
+  handleSubmit = e => {
     const { file, item } = this.state;
 
     // const { item } = this.state;
@@ -445,6 +449,7 @@ class DashBoardComponent extends Component {
           invalid={!element.config.valid}
           touched={element.config.touched}
           value={element.config.value}
+          myKey={element.config.lastPdfAddTime}
         />
       );
     });
@@ -455,7 +460,7 @@ class DashBoardComponent extends Component {
           <h4>Submit new entry </h4>
           {form}
 
-          <button onClick={this.clearState}>clear</button>
+          {/* <button onClick={this.clearState}>clear</button> */}
           <button
             onClick={this.handleSubmit}
             disabled={!this.state.formIsValid}
