@@ -20,9 +20,59 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   state = {
-    authenticated: false
+    authenticated: false,
+    cart: [
+      // {
+      //   description: "Disneys Pin Lot",
+      //   price: "6",
+      //   title: "Disneys Pin Lot",
+      //   type: "pins",
+      //   url:
+      //     "https://firebasestorage.googleapis.com/v0/b/twin-b…=media&token=1a581a7d-2440-41c3-a4d6-a5ea1862de48"
+      // }
+      // {
+      //   description: "Disneys Pin Lot",
+      //   price: "36",
+      //   title: "Disneys Pin Lot",
+      //   type: "pins",
+      //   url:
+      //     "https://firebasestorage.googleapis.com/v0/b/twin-b…=media&token=1a581a7d-2440-41c3-a4d6-a5ea1862de48"
+      // }
+    ],
+
+    user: null
   };
 
+  AddItem = item => {
+    // console.log("add item was pressed", item);
+    const copyState = { ...this.state };
+
+    if (!copyState.cart.includes(item)) {
+      copyState.cart.push(item);
+    }
+
+    this.setState({ cart: copyState.cart });
+  };
+
+  deleteItem = key => {
+    // console.log("item is", item);
+    // console.log("item deletion was triggered");
+
+    const copyCart = [...this.state.cart];
+
+    //may need to adjust after adding ids
+    const removedItem = copyCart.filter(element => element.title !== key);
+    // console.log("remoed item", removedItem);
+    // console.log("copy cart is", copyCart);
+    // copyCart.filter(elemn)
+    // const removedItem = copyCart.filter(element => console.log(
+
+    // ));
+    // console.log(key);
+    // console.log("delete itemw as pressed");
+
+    this.setState({ cart: removedItem });
+  };
   // componentWillMount() {
   //   this.removeAuthListener = firebase.auth().onAuthStateChanged(user => {
   //     if (user) {
@@ -45,19 +95,32 @@ class App extends Component {
     firebase.auth().onAuthStateChanged(authenticated => {
       authenticated
         ? this.setState(() => ({
-            authenticated: true
+            authenticated: true,
+            user: firebase.auth().currentUser
           }))
         : this.setState(() => ({
-            authenticated: false
+            authenticated: false,
+            user: null
           }));
     });
   }
   render() {
-    console.log("this state", this.state);
+    // console.log("this state", this.state);
+
+    // const user = firebase.auth().currentUser;
+
+    // console.log("the user is", user);
+    // if (this.state.authenticated) {
+    //   console.log(this);
+    // }
+
     return (
       // <BrowserRouter>
       <div className="App">
-        <Navbar authenticated={this.state.authenticated} />
+        <Navbar
+          authenticated={this.state.authenticated}
+          cartSize={this.state.cart.length}
+        />
         <HeaderComponent />
         <Switch>
           <Route path="/" exact component={HomeComponent} />
@@ -65,15 +128,39 @@ class App extends Component {
           <Route
             path="/store/:type/:title"
             exact
-            component={SelectedItemComponent}
+            render={props => (
+              <SelectedItemComponent AddItem={this.AddItem} {...props} />
+            )}
+            // component={SelectedItemComponent}
+            // AddItem={this.AddItem}
           />
           <Route path="/store" component={StoreComponent} />
           <Route path="/store/stickers" component={StoreComponent} />
           <Route path="/store/pins" component={StoreComponent} />
-          <Route path="/account" component={AccountComponent} />
+          {/* <Route path="/account" component={AccountComponent} /> */}
           <Route path="/contact" component={Contact} />
+<<<<<<< HEAD
           <Route path="/shopping_cart" component={ShoppingCart} />
 
+=======
+
+          <Route
+            path="/cart"
+            render={props => (
+              <ShoppingCart
+                cart={this.state.cart}
+                user={this.state.user}
+                delete={item => this.deleteItem(item)}
+              />
+            )}
+          />
+          <Route path="/account" component={AccountComponent} />
+          {/* <ProtectedRoute
+            authenticated={!this.state.authenticated}
+            path="/account"
+            component={AccountComponent}
+          /> */}
+>>>>>>> 6b645f90d85659a3f1f2e434a02b8cad75819766
           {/* <Route path="/dashboard" component={DashBoardComponent} /> */}
           <ProtectedRoute
             authenticated={this.state.authenticated}

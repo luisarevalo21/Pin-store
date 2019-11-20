@@ -8,6 +8,8 @@ import LogOutComponent from "../LogOutComponent/LogOutComponent";
 import ProtectedRoute from "../ProtectedRoute";
 import Home from "../HomeComponent/HomeComponent";
 import Dashboard from "../../containers/DashBoardComponent/DashBoardComponent";
+
+// import CartComponent from "../../containers/CartComponent/CartComponent";
 const navbar = props => {
   // const dashboard = props.authenticated ? <NavLink to="/dashboard">Dashboard</NavLink> : null;
   // const shoppingCart = props.authenticated ? (
@@ -15,7 +17,8 @@ const navbar = props => {
   // ) : null;
   const authenticatedData = props.authenticated ? (
     <>
-      <NavLink to="/shopping_cart">Shopping Cart</NavLink>
+      {/* <NavLink to="/shopping_cart">Shopping Cart</NavLink> */}
+
       <NavLink to="/dashboard" activeStyle={{ backgroundColor: "red" }}>
         Dashboard
       </NavLink>
@@ -58,8 +61,11 @@ const navbar = props => {
               Contact
             </NavLink>
             {authenticatedData}
-            {logout}
 
+            <NavLink to="/cart" activeStyle={{ backgroundColor: "red" }}>
+              Cart {props.cartSize}
+            </NavLink>
+            {logout}
             {/* {dashboard}
             {account} */}
             {/* <NavLink to="/account" activeStyle={{ backgroundColor: "red" }}>
