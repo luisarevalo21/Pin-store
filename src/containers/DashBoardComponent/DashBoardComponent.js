@@ -177,7 +177,7 @@ class DashBoardComponent extends Component {
 
   render() {
     const { state } = this;
-    
+    let showAlert = (<ModalComponent />);
     console.log("the state is", state);
     return (
       <div className={classes.Layout}>
@@ -214,10 +214,12 @@ class DashBoardComponent extends Component {
           
           <input id="input" type="file" onChange={this.handleFileChange} />
           <button onClick={this.handleSubmit} className="btn btn-success btn-ladda-progress" datastyle="expand-right">Submit {this.state.progress}</button>
-         
+          
+      
+        
           <progress className="uploadProgress" value={this.state.progress} max="1.0"/>
           
-          
+          {showAlert}
 
         </div>
       </div>
