@@ -325,7 +325,7 @@ class StoreComponent extends Component {
             {items}
 
             {/* //ALERT COMPONENT  */}
-            <Alert />
+            {/* <Alert /> */}
             {/* <ShopingCartComponent cart={this.state.cart} /> */}
             {/* <CardComponent title="Sora sticker" image={soraImage} price={2.0} /> */}
             {/* <CardComponent />

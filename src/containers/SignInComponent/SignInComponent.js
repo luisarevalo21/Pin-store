@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import InputComponent from "../../components/InputComponents/InputComponents";
 import { element } from "prop-types";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-
+import axios from "../../axios";
 class SignInComponent extends Component {
   state = {
     formSubmission: {
@@ -42,8 +42,27 @@ class SignInComponent extends Component {
   uiConfig = {
     signInFlow: "popup",
     signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+    signInSuccessUrl: "/",
     callbacks: {
-      signInSuccess: () => false
+      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        console.log("authResult", authResult.additionalUserInfo.isNewUser);
+
+        if (authResult.additionalUserInfo.isNewUser) {
+          const newUser = {
+            name: authResult.user.displayName,
+            email: authResult.user.email,
+            uid: authResult.user.uid
+          };
+          axios
+            .patch("/users.json", { [newUser.uid]: newUser })
+            .then(response => {
+              console.log(response);
+              this.props.history.push("/");
+            })
+            .catch(error => console.log("error occrued", error));
+        }
+        return true;
+      }
     }
   };
 
@@ -124,27 +143,27 @@ class SignInComponent extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    // const { email, password } = this.state.formSubmission;
-    // console.log("the email is", email.value);
-    // console.log("the password is", password.value);
+    const { email, password } = this.state.formSubmission;
+    console.log("the email is", email.value);
+    console.log("the password is", password.value);
 
-    // firebase
-    //   .auth()
-    //   .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-    //   .then(() => {
-    //     firebase
-    //       .auth()
-    //       .signInWithEmailAndPassword(email.value, password.value)
-    //       .then(result => {
-    //         if (result.user) {
-    //           this.setState({ user: result.user });
-    //           this.props.history.push("/");
-    //         }
-    //       })
-    //       .catch(error => {
-    //         this.setState({ error: error });
-    //       });
-    // });
+    firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email.value, password.value)
+          .then(result => {
+            if (result.user) {
+              this.setState({ user: result.user });
+              this.props.history.push("/");
+            }
+          })
+          .catch(error => {
+            this.setState({ error: error });
+          });
+      });
     // .catch(error => {
     //   // alert("An error was submitted: " + error);
     // });
@@ -178,7 +197,7 @@ class SignInComponent extends Component {
     return (
       <>
         {/* // <form className={classes.Layout} onSubmit={this.handleSubmit}> */}
-        <form className={classes.Layout}>
+        <form className={classes.Layout} onSubmit={this.handleSubmit}>
           {form}
           <button className={classes.Button} disabled={!this.state.formIsValid}>
             Sign In

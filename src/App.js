@@ -15,6 +15,7 @@ import HeaderComponent from "./components/HeaderComponent/HeaderComponent";
 import DashBoardComponent from "./containers/DashBoardComponent/DashBoardComponent";
 import ShoppingCart from "./components/ShoppingCartComponent/ShoppingCartComponent";
 import ProtectedRoute from "./components/ProtectedRoute";
+import axios from "./axios";
 // import { BrowserRouter } from "react-router-dom";
 
 class App extends Component {
@@ -91,19 +92,70 @@ class App extends Component {
   // }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(authenticated => {
-      authenticated
-        ? this.setState(() => ({
-            authenticated: true,
-            user: firebase.auth().currentUser
-          }))
-        : this.setState(() => ({
-            authenticated: false,
-            user: null
-          }));
+    firebase.auth().onAuthStateChanged(user => {
+      user
+        .getIdToken(true)
+        .then(idToken => {
+          axios
+            .get("/users/" + user.uid + ".json", {
+              params: {
+                auth: idToken
+              }
+            })
+            .then(response =>
+              // console.log("the response is", response))
+              this.setState({ isAdmin: response.data.isAdmin })
+            )
+            .catch(error => console.log(error));
+          user
+            ? this.setState({
+                authenticated: true,
+                user: user,
+                loggedin: true,
+                // uid: user.uid,
+                token: idToken
+              })
+            : this.setState({
+                authenticated: false,
+                user: null,
+                loggedin: false,
+                token: null
+              });
+        })
+        .catch(error => console.log(error));
     });
   }
+
+  logout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log("log out was sucessful");
+        this.setState({
+          authenticated: false,
+          user: null,
+          isAdmin: false,
+          loggedin: false
+        });
+      });
+  };
+  // console.log("the user is, ", user);
+
+  // firebase.auth().onAuthStateChanged(authenticated => {
+  //   authenticated
+  //     ? this.setState(() => ({
+  //         authenticated: true,
+  //         user: firebase.auth().currentUser
+  //       }))
+  //     : this.setState(() => ({
+  //         authenticated: false,
+  //         user: null
+  //       }));
+  // });
+
   render() {
+    console.log("this.state.authenticated", this.state.authenticated);
     // console.log("this state", this.state);
 
     // const user = firebase.auth().currentUser;
@@ -119,6 +171,8 @@ class App extends Component {
         <Navbar
           authenticated={this.state.authenticated}
           cartSize={this.state.cart.length}
+          isAdmin={this.state.isAdmin}
+          logout={this.logout}
         />
         <HeaderComponent />
         <Switch>
@@ -158,6 +212,7 @@ class App extends Component {
           {/* <Route path="/dashboard" component={DashBoardComponent} /> */}
           <ProtectedRoute
             authenticated={this.state.authenticated}
+            isAdmin={this.state.isAdmin}
             path="/dashboard"
             component={DashBoardComponent}
           />

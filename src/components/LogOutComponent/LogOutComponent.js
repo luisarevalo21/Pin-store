@@ -9,21 +9,21 @@ class Logout extends Component {
   };
 
   logoutUser = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        console.log("log out was sucessful");
-        this.setState({ redirect: true });
-      })
-      .catch(error => console.log("error occured"));
+    // firebase
+    //   .auth()
+    //   .signOut()
+    //   .then(() => {
+    //     console.log("log out was sucessful");
+    //     this.setState({ redirect: true });
+    //   })
+    //   .catch(error => console.log("error occured"));
   };
   render() {
     if (this.state.redirect) {
       return <Redirect to="/" />;
     }
     return (
-      <button onClick={this.logoutUser} className={classes.Button}>
+      <button onClick={this.props.logout} className={classes.Button}>
         Log Out
       </button>
     );
