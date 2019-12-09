@@ -11,8 +11,6 @@ const CLIENT = {
   // production: "xxxXXX"
 };
 
-console.log("THE CLIENT IS", CLIENT);
-
 // const ENV = process.env.NODE_ENV === "production" ? "production" : "sandbox";
 const ENV = "sandbox";
 
