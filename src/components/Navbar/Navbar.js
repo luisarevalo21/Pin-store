@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import Logo from './../../assets/images/Logo/Logo1.png';
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 import LogOutComponent from "../LogOutComponent/LogOutComponent";
@@ -40,10 +41,10 @@ const navbar = props => {
   return (
     <div>
       <Navbar sticky="top" collapseOnSelect expand="md">
-        <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand className="p-0" href="/"><img src={Logo} className=""  alt="" width="30%"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav>
+          <Nav className="ml-auto mr-5">
             <NavLink to="/" exact activeStyle={{ backgroundColor: "red" }}>
               Home
             </NavLink>

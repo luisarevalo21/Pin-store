@@ -76,7 +76,7 @@ class SelectedItem extends Component {
       // console.log("inside if");
       displayedItem = (
         <>
-          <img src={selectedItem.url} className={classes.Image} />
+          <img src={selectedItem.url} className={classes.Image} alt="" />
 
           <div className={classes.Card}>
             <h3>{selectedItem.title}</h3>
