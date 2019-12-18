@@ -25,7 +25,10 @@ class PaypalComponent extends React.Component {
   //   window.React = React;
   //   window.ReactDOM = ReactDOM;
   state = {
-    showButton: false
+    showButton: false,
+    cart: this.props.cart,
+    finalCart: null,
+    subTotal: 0
     // env: "sandbox", // Or 'sandbox'
     // client: {
     //   sandbox:
@@ -36,10 +39,29 @@ class PaypalComponent extends React.Component {
   };
   // }
 
+  getCartInformation = () => {
+    let total = 0;
+    const copyCart = this.props.cart.map(element => {
+      total = total + Number(element.price);
+      return {
+        name: element.title,
+        description: element.description,
+        price: element.price,
+        currency: "USD",
+        quantity: "1"
+      };
+    });
+
+    total = total.toString() + ".00";
+    this.setState({ subTotal: total, finalCart: copyCart });
+  };
+
+  // return this.state.cart.map(element => console.log(element));
+
   componentDidMount() {
     // Todo
     const { isScriptLoaded, isScriptLoadSucceed } = this.props;
-
+    this.getCartInformation();
     console.log(isScriptLoaded, isScriptLoadSucceed);
     if (isScriptLoaded && isScriptLoadSucceed) {
       this.setState({ showButton: true });
@@ -57,10 +79,133 @@ class PaypalComponent extends React.Component {
   }
   render() {
     const paypal = window.PAYPAL;
+    const { subTotal, finalCart } = this.state;
+    console.log("subtotal", subTotal);
+    console.log("final cart is", finalCart);
     const payment = () =>
       paypal.rest.payment.create(this.props.env, this.props.client, {
-        transactions: [{ amount: { total: 5, currency: this.props.currency } }]
+        redirect_urls: {
+          return_url: "/",
+          cancel_url: "/"
+        },
+
+        transactions: [
+          {
+            amount: {
+              total: subTotal,
+              currency: "USD",
+              details: {
+                subtotal: subTotal,
+                tax: "0",
+                shipping: "0",
+                handling_fee: "0",
+                shipping_discount: "0",
+                insurance: "0"
+              }
+            },
+            description: "The payment transaction description.",
+            custom: "90048630024435",
+            //invoice_number: '12345', Insert a unique invoice number
+            payment_options: {
+              allowed_payment_method: "INSTANT_FUNDING_SOURCE"
+            },
+            soft_descriptor: "ECHI5786786",
+            item_list: {
+              items: finalCart
+              // {
+              //   name: "hat",
+              //   description: "Brown hat.",
+              //   quantity: "1",
+              //   price: subTotal,
+              //   // tax: "0.01",
+              //   // sku: "1",
+              //   currency: "USD"
+              // }
+              // {
+              //   name: "handbag",
+              //   description: "Black handbag.",
+              //   quantity: "1",
+              //   price: "15",
+              //   tax: "0.02",
+              //   sku: "product34",
+              //   currency: "USD"
+              // }
+              //]
+              // shipping_address: {
+              //   recipient_name: "Brian Robinson",
+              //   line1: "4th Floor",
+              //   line2: "Unit #34",
+              //   city: "San Jose",
+              //   country_code: "US",
+              //   postal_code: "95131",
+              //   phone: "011862212345678",
+              //   state: "CA"
+              // }
+            }
+          }
+        ],
+        note_to_payer: "Contact us for any questions on your order."
       });
+
+    //   transactions: [
+    //     {
+    //       amount: {
+    //         total: "5",
+    //         currency: "USD",
+    //         details: {
+    //           subtotal: "5",
+    //           tax: "0",
+    //           shipping: "0",
+    //           handling_fee: "0",
+    //           shipping_discount: "0",
+    //           insurance: "0"
+    //         }
+    //       },
+    //       description: "The payment transaction description.",
+    //       custom: "90048630024435",
+    //       //invoice_number: '12345', Insert a unique invoice number
+    //       payment_options: {
+    //         allowed_payment_method: "INSTANT_FUNDING_SOURCE"
+    //       },
+    //       soft_descriptor: "ECHI5786786",
+    //       item_list: {
+    //         items:
+    //           // items: [
+    //           {
+    //             name: "hat",
+    //             description: "Brown hat.",
+    //             quantity: "5",
+    //             price: "5",
+    //             tax: "0.01",
+    //             sku: "1",
+    //             currency: "USD"
+    //           },
+    //         //   {
+    //         //     name: "handbag",
+    //         //     description: "Black handbag.",
+    //         //     quantity: "1",
+    //         //     price: "15",
+    //         //     tax: "0.02",
+    //         //     sku: "product34",
+    //         //     currency: "USD"
+    //         //   }
+
+    //         shipping_address: {
+    //           recipient_name: "Brian Robinson",
+    //           line1: "4th Floor",
+    //           line2: "Unit #34",
+    //           city: "San Jose",
+    //           country_code: "US",
+    //           postal_code: "95131",
+    //           phone: "011862212345678",
+    //           state: "CA"
+    //         }
+    //       }
+    //     }
+    //   ],
+    //   note_to_payer: "Contact us for any questions on your order."
+    // });
+
     // const paypal = window.PAYPAL;
     // const {
     //   total,
@@ -74,6 +219,7 @@ class PaypalComponent extends React.Component {
     // } = this.props;
     const { showButton } = this.state;
     console.log("SHOW BUTTON IS", showButton);
+    // this.getCartInformation();
     // const payment = () =>
     //   paypal.rest.payment.create(env, client, {
     //     transactions: [
@@ -86,7 +232,7 @@ class PaypalComponent extends React.Component {
     //     ]
     //   });
 
-    const onAuthorize = (data, actions) =>
+    const onAuthorize = (data, actions) => {
       actions.payment.execute().then(() => {
         const payment = Object.assign({}, this.props.payment);
         payment.paid = true;
@@ -95,8 +241,15 @@ class PaypalComponent extends React.Component {
         payment.paymentID = data.paymentID;
         payment.paymentToken = data.paymentToken;
         payment.returnUrl = data.returnUrl;
-        this.props.onSuccess(payment);
+        // this.props.onSuccess(payment);
       });
+      // console.log(
+
+      actions.order.get().then(
+        orderDetails => console.log("the order details are,", orderDetails)
+        //)
+      );
+    };
     // const onAuthorize = (data, actions) =>
     //   actions.payment.execute().then(() => {
     //     const payment = {

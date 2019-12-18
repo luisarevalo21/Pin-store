@@ -63,7 +63,18 @@ class ShopingCartComponent extends Component {
   //   this.setState({ cart: removedItem });
   // };
   render() {
-    const onSuccess = payment => console.log("Successful payment!", payment);
+    // console.log(this.props);
+
+    const onSuccess = (payment, actions) => {
+      console.log("Successful payment!", payment);
+      // console.log("actions", actions.order.get());
+      // this.setState({ cart: null, itemTotal: null });
+      // console.log(actions.payment.get());
+      window.alert("Thank you for your purchase!");
+      // this.setState({ cart: null, itemTotal: null });
+      // this.props.success();
+      // this.props.history.push("/");
+    };
     const onError = error =>
       console.log("Erroneous payment OR failed to load script!", error);
     const onCancel = data => console.log("Cancelled payment!", data);
@@ -121,6 +132,7 @@ class ShopingCartComponent extends Component {
               currency={"USD"}
               total={100}
               onSuccess={onSuccess}
+              cart={this.state.cart}
               // onError={onError}
               // onCancel={onCancel}
             />
