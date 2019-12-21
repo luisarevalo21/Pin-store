@@ -6,7 +6,7 @@ import HomeComponent from "./components/HomeComponent/HomeComponent";
 import StoreComponent from "./containers/StoreComponent/StoreComponent";
 import AboutComponent from "./components/AboutComponent/AboutComponent";
 import Footer from "./components/Footer/Footer";
-import Contact from "./containers/ContactComponent/ContactComponent";
+import Contact from "./containers/Contact";
 import SelectedItemComponent from "./containers/SelectedItem/SeletectedItem";
 import AccountComponent from "./components/AccountComponent/AccountComponent";
 import firebase from "./firebase";
