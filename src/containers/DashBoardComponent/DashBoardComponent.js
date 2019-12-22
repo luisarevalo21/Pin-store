@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import { transitions, positions, Provider as AlertProvider } from "react-alert";
+// import { transitions, positions, Provider as AlertProvider } from "react-alert";
 // import AlertTemplate from "react-alert-template-basic";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 import classes from "./DashBoardComponent.module.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
