@@ -10,7 +10,10 @@
     "mdbreact": "^4.21.1",
     "react": "^16.10.2",
     "react-alert": "^6.0.0",
+<<<<<<< HEAD
+=======
     "react-alert-template-basic": "^1.0.0",
+>>>>>>> e877376fcc787392a1bd5f6a2e0031368b4b3bae
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
     "react-dropdown": "^1.6.4",

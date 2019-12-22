@@ -31,9 +31,16 @@
   background-color: #ffc680 !important;
   color: black;
 }
-.Button:hover {
+
+/* .Button:hover {
   background-color: #914da8 !important;
+} */
+
+.Button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
 }
+
 @media (max-width: 500px) {
   .Layout {
     width: 80%;

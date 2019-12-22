@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import classes from "./StoreComponent.module.css";
 import image from "../../assets/images/HomeImages/PhoneGrips.jpg";
-
+import Alert from "../../components/Alert/Alert";
 import soraImage from "../../assets/images/StoreImages/soraSticker.jpg";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import axios from "../../axios";
 // import Firebase from "firebase";
 import firebase from "../../firebase";
+import ShopingCartComponent from "../../components/ShoppingCartComponent/ShoppingCartComponent";
 // import { withFirebase } from "../../Firebase/index";
 // import { FirebaseContext } from "../../Firebase/index";
 
@@ -44,7 +45,8 @@ class StoreComponent extends Component {
     phoneGrips: null,
     links: null,
     location: null,
-    currentPath: null
+    currentPath: null,
+    cart: null
   };
 
   componentDidUpdate() {
@@ -156,6 +158,9 @@ class StoreComponent extends Component {
     // return <Link to="/store/item" />;
   };
 
+  AddItem = item => {
+    console.log("added item was clicked", item);
+  };
   // componentDidUpdate(){
 
   // }
@@ -218,7 +223,10 @@ class StoreComponent extends Component {
         // let { pins, stickers } = this.state;
         const combined = { ...pins, ...stickers };
         keys = Object.keys(combined);
+
+        // console.log("the keys are", keys);
         items = keys.map(element => {
+          // console.log("the element is", element);
           return (
             <CardComponent
               clicked={() =>
@@ -227,7 +235,7 @@ class StoreComponent extends Component {
                   combined[element].type
                 )
               }
-              key={Math.random()}
+              key={element}
               title={combined[element].title}
               image={combined[element].url}
               // image={link}
@@ -253,7 +261,7 @@ class StoreComponent extends Component {
               clicked={() =>
                 this.handleClick(pins[element].title, pins[element].type)
               }
-              key={Math.random()}
+              key={element}
               title={pins[element].title}
               image={pins[element].url}
               // image={link}
@@ -282,7 +290,7 @@ class StoreComponent extends Component {
                   stickers[element].type
                 )
               }
-              key={Math.random()}
+              key={element}
               title={stickers[element].title}
               image={stickers[element].url}
               // image={link}
@@ -302,103 +310,7 @@ class StoreComponent extends Component {
       default:
         items = <div>No items to dispaly </div>;
     }
-    // console.log("this.props.location", this.props);
-    // console.log(this.props);
-    // console.log(this.state.products.length);
 
-    // if (
-    //   // this.state.products !== null
-    //   this.state.location
-    // ) {
-    // console.log("inside the if");
-
-    // const urls = this.fetchImages();
-
-    // urls.map(element => console.log(element.B));
-    // console.log(urls);
-    // console.log("inside if");
-    // const { pins, stickers, links } = this.state;
-
-    // console.log(links);
-
-    // const combined = { ...pins, ...stickers };
-
-    // console.log(
-    //   storage.refFromURL(
-    //     "gs://twin-bear-creations.appspot.com/KH Kairi Chibi Sticker.jpg"
-    //   )
-    // );
-    // console.log("combined is ", combined);
-    // console.log(this.state.pins);
-    // const keys = Object.keys(combined);
-
-    // console.log("the keys are", keys);
-    // // console.log(this.state.pins);
-    // items = keys.map(element => {
-    // const link = storage.refFromURL(combined[element].url).toString();
-
-    // storage
-    //   .getDownloadURL("KH Kairi Chibi Sticker.jpg")
-    //   .then(url => console.log(url))
-    //   .catch(error => console.log(error));
-
-    // console.log("linek is", link);
-    // <Link to="/store/item">
-    // return (
-    //   <CardComponent
-    //     clicked={() =>
-    //       this.handleClick(combined[element].title, combined[element].type)
-    //     }
-    //     key={Math.random()}
-    //     title={combined[element].title}
-    //     image={combined[element].url}
-    //     // image={link}
-    //     // image={urls.map(title => element[title])}
-    //     // image={storage
-    //     //   .child(`${title}.jpg`)
-    //     //   .getDownloadURL()
-    //     //   .then(url => this.setState({ selectedImage: url }))
-    //     //   .catch(error => console.log(error))}
-    //     price={combined[element].price}
-    //     // type={combined[element].type}
-    //   />
-    // );
-
-    // </Link>
-    // });
-
-    // console.log(values);
-    // values.map(element => console.log(element.price));
-    // console.log(values);
-    // keys.map(element => {
-    //   console.log(element);
-    //   // console.log(values[element]);
-    //   // console.log(pins[element]);
-    // });
-    // console.log(keys);
-
-    // keys.map(element => {
-    //   console.log(pins[element]);
-    // });
-    // axios.get("./pins.json").then(response => console.log(response.data));
-    // console.log(keys);
-    // console.log(keys);
-    // keys.map(element => {
-    //   // axios.get("./pins")
-    //   // console.log(element);
-    //   axios.get(`./${element}.json`).then(response => {
-    //     console.log(element);
-
-    //     console.log(Object.keys(response.data));
-    //   });
-    // });
-
-    //   )
-
-    // Object.keys(this.state.products).map(element => console.log(element));
-
-    // console.log(this.state.products.keys());
-    //}
     return (
       <>
         <section className={classes.Image}>
@@ -411,6 +323,10 @@ class StoreComponent extends Component {
 
           <div className={classes.Gallery}>
             {items}
+
+            {/* //ALERT COMPONENT  */}
+            {/* <Alert /> */}
+            {/* <ShopingCartComponent cart={this.state.cart} /> */}
             {/* <CardComponent title="Sora sticker" image={soraImage} price={2.0} /> */}
             {/* <CardComponent />
               <CardComponent />
@@ -438,3 +354,101 @@ class StoreComponent extends Component {
 }
 
 export default StoreComponent;
+
+// console.log("this.props.location", this.props);
+// console.log(this.props);
+// console.log(this.state.products.length);
+
+// if (
+//   // this.state.products !== null
+//   this.state.location
+// ) {
+// console.log("inside the if");
+
+// const urls = this.fetchImages();
+
+// urls.map(element => console.log(element.B));
+// console.log(urls);
+// console.log("inside if");
+// const { pins, stickers, links } = this.state;
+
+// console.log(links);
+
+// const combined = { ...pins, ...stickers };
+
+// console.log(
+//   storage.refFromURL(
+//     "gs://twin-bear-creations.appspot.com/KH Kairi Chibi Sticker.jpg"
+//   )
+// );
+// console.log("combined is ", combined);
+// console.log(this.state.pins);
+// const keys = Object.keys(combined);
+
+// console.log("the keys are", keys);
+// // console.log(this.state.pins);
+// items = keys.map(element => {
+// const link = storage.refFromURL(combined[element].url).toString();
+
+// storage
+//   .getDownloadURL("KH Kairi Chibi Sticker.jpg")
+//   .then(url => console.log(url))
+//   .catch(error => console.log(error));
+
+// console.log("linek is", link);
+// <Link to="/store/item">
+// return (
+//   <CardComponent
+//     clicked={() =>
+//       this.handleClick(combined[element].title, combined[element].type)
+//     }
+//     key={Math.random()}
+//     title={combined[element].title}
+//     image={combined[element].url}
+//     // image={link}
+//     // image={urls.map(title => element[title])}
+//     // image={storage
+//     //   .child(`${title}.jpg`)
+//     //   .getDownloadURL()
+//     //   .then(url => this.setState({ selectedImage: url }))
+//     //   .catch(error => console.log(error))}
+//     price={combined[element].price}
+//     // type={combined[element].type}
+//   />
+// );
+
+// </Link>
+// });
+
+// console.log(values);
+// values.map(element => console.log(element.price));
+// console.log(values);
+// keys.map(element => {
+//   console.log(element);
+//   // console.log(values[element]);
+//   // console.log(pins[element]);
+// });
+// console.log(keys);
+
+// keys.map(element => {
+//   console.log(pins[element]);
+// });
+// axios.get("./pins.json").then(response => console.log(response.data));
+// console.log(keys);
+// console.log(keys);
+// keys.map(element => {
+//   // axios.get("./pins")
+//   // console.log(element);
+//   axios.get(`./${element}.json`).then(response => {
+//     console.log(element);
+
+//     console.log(Object.keys(response.data));
+//   });
+// });
+
+//   )
+
+// Object.keys(this.state.products).map(element => console.log(element));
+
+// console.log(this.state.products.keys());
+//}
