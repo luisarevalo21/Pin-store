@@ -70,7 +70,7 @@ const intialState = {
   },
 
   url: null,
-  formIsValid: false,
+  formIsValid: true,
   item: "",
   posting: false,
   progress: 0
@@ -286,7 +286,7 @@ class DashBoardComponent extends Component {
 
     formData.price = Number(formData.price).toFixed(2);
 
-    // console.log("formdata value is ", formData["price"].value);
+    // // console.log("formdata value is ", formData["price"].value);
 
     // if (title !== "" && description !== "" && price > 0 && url !== null) {
 
@@ -330,30 +330,73 @@ class DashBoardComponent extends Component {
 
             formData.url = this.state.url;
 
-            // console.log("data before push", formData.dropdown);
             axios
-              .post(`/${formData.dropdown}.json`, formData)
-              .then(response => {
-                // this.setState({completed:true})
-                // const options = {
-                //   // you can also just use 'bottom center'
-                //   position: positions.BOTTOM_CENTER,
-                //   timeout: 5000,
-                //   offset: "30px",
-                //   // you can also just use 'scale'
-                //   transition: transitions.SCALE
-                // };
-                // alert("File succesfully uploaded");
-                /* rerote to main after succesfull submitting*/
-                // this.props.history.push("/");
-                // console.log(response);
-              })
+              .post(`/products/${formData.dropdown}.json`, "true")
+              .then(response =>
+                axios
+
+                  .put(
+                    `/${formData.dropdown}/${response.data.name}.json`,
+                    formData
+                  )
+                  .then(response => {
+                    console.log(response);
+                  })
+                  .catch(error => console.log(error))
+              )
               .catch(error => console.log(error));
-          })
-          .catch(error => console.log(error));
+          });
       }
     );
+
+    // console.log("THE FORM DATA IS", formData);
+    // axios
+    //   .post(`/products/${formData.dropdown}.json`, "true")
+    //   .then(response =>
+    //     axios
+
+    //       .put(`/${formData.dropdown}/${response.data.name}.json`, formData)
+    //       .then(response => {
+    //         console.log(response);
+    //       })
+    //       .catch(error => console.log(error))
+    //   )
+    //   .catch(error => console.log(error));
   };
+
+  // console.log("data before push", formData.dropdown);
+
+  // console.log("THE ID IS ", formData);
+  // axios
+
+  //   .put(`/${formData.dropdown}/${formData.id}.json`, formData)
+  //   .then(response => {
+  //     console.log(response);
+  //   })
+  //   .catch(error => console.log(error));
+
+  // axios
+  //   .post(`/${formData.dropdown}.json`, formData)
+  //   .then(response => {
+  //     // this.setState({completed:true})
+  //     // const options = {
+  //     //   // you can also just use 'bottom center'
+  //     //   position: positions.BOTTOM_CENTER,
+  //     //   timeout: 5000,
+  //     //   offset: "30px",
+  //     //   // you can also just use 'scale'
+  //     //   transition: transitions.SCALE
+  //     // };
+  //     // alert("File succesfully uploaded");
+  //     /* rerote to main after succesfull submitting*/
+  //     // this.props.history.push("/");
+  //     // console.log(response);
+  //   })
+  //   .catch(error => console.log(error));
+  //     })
+  //     .catch(error => console.log(error));
+  // }
+  //);
 
   // }
   // console.log("this.state", this.state.errors);
