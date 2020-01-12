@@ -1,6 +1,19 @@
 import React, { Component } from "react";
 import ShopListItemComponent from "../ShopListItemComponent/ShopListItemComponent";
 import classes from "./ShoppingCartComponent.module.css";
+import Paypal from "../../containers/PaypalComponent/PaypalComponent";
+// import dotenv from "dotenv";
+// dotenv.config();
+// console.log(process.env.REACT_APP_METEORITE_STRIKE_DATASET);
+const CLIENT = {
+  sandbox: process.env.REACT_APP_PAYPAL_CLIENT_ID_SANDBOX
+
+  // production: "xxxXXX"
+};
+
+// const ENV = process.env.NODE_ENV === "production" ? "production" : "sandbox";
+const ENV = "sandbox";
+
 class ShopingCartComponent extends Component {
   state = {
     cart: this.props.cart,
@@ -50,6 +63,22 @@ class ShopingCartComponent extends Component {
   //   this.setState({ cart: removedItem });
   // };
   render() {
+    // console.log(this.props);
+
+    const onSuccess = (payment, actions) => {
+      console.log("Successful payment!", payment);
+      // console.log("actions", actions.order.get());
+      // this.setState({ cart: null, itemTotal: null });
+      // console.log(actions.payment.get());
+      window.alert("Thank you for your purchase!");
+      // this.setState({ cart: null, itemTotal: null });
+      // this.props.success();
+      // this.props.history.push("/");
+    };
+    const onError = error =>
+      console.log("Erroneous payment OR failed to load script!", error);
+    const onCancel = data => console.log("Cancelled payment!", data);
+
     let itemTotal = 0;
     let items = <h3>Your cart is empty</h3>;
     if (this.state.cart.length !== 0) {
@@ -96,6 +125,17 @@ class ShopingCartComponent extends Component {
             <h4>Cart Total</h4>
             <p>${itemTotal}</p>
             <button onClick={this.Checkout}>Checkout</button>
+            <Paypal
+              client={CLIENT}
+              env={ENV}
+              commit={true}
+              currency={"USD"}
+              total={100}
+              onSuccess={onSuccess}
+              cart={this.state.cart}
+              // onError={onError}
+              // onCancel={onCancel}
+            />
           </div>
           {/* </div> */}
         </div>

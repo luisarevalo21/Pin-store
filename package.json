@@ -8,13 +8,16 @@
     "firebase": "^7.2.1",
     "jquery": "^3.4.1",
     "mdbreact": "^4.21.1",
+    "paypal-checkout": "^4.0.305",
     "react": "^16.10.2",
     "react-alert": "^6.0.0",
     "react-alert-template-basic": "^1.0.0",
+    "react-async-script-loader": "^0.3.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
     "react-dropdown": "^1.6.4",
     "react-firebaseui": "^4.0.0",
+    "react-paypal-button-v2": "^2.6.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0"
   },
@@ -38,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }

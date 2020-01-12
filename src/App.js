@@ -16,6 +16,9 @@ import DashBoardComponent from "./containers/DashBoardComponent/DashBoardCompone
 import ShoppingCart from "./components/ShoppingCartComponent/ShoppingCartComponent";
 import ProtectedRoute from "./components/ProtectedRoute";
 import axios from "./axios";
+
+import TabNavigator from "./components/TabNavigator/TabNavigator";
+import OrderSummaryComponent from "./components/OrderSummaryComponent/OrderSummaryComponent";
 // import { BrowserRouter } from "react-router-dom";
 
 class App extends Component {
@@ -43,6 +46,9 @@ class App extends Component {
     user: null
   };
 
+  clearState = () => {
+    this.setState({ cart: [] });
+  };
   AddItem = item => {
     // console.log("add item was pressed", item);
     const copyState = { ...this.state };
@@ -200,6 +206,8 @@ class App extends Component {
                 cart={this.state.cart}
                 user={this.state.user}
                 delete={item => this.deleteItem(item)}
+                success={this.clearState}
+                {...props}
               />
             )}
           />
@@ -214,7 +222,7 @@ class App extends Component {
             authenticated={this.state.authenticated}
             isAdmin={this.state.isAdmin}
             path="/dashboard"
-            component={DashBoardComponent}
+            component={TabNavigator}
           />
         </Switch>
 
