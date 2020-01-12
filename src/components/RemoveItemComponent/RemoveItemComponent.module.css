@@ -1,0 +1,15 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+  justify-content: center;
+  align-content: center;
+}
+
+.Button {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 5%;
+}
