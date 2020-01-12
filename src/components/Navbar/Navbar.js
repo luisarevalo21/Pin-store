@@ -15,20 +15,26 @@ const navbar = props => {
   // const shoppingCart = props.authenticated ? (
   //   <NavLink to="/shopping_cart">Shopping Cart</NavLink>
   // ) : null;
-  const authenticatedData = props.authenticated ? (
-    <>
-      {/* <NavLink to="/shopping_cart">Shopping Cart</NavLink> */}
+  const authenticatedData =
+    props.authenticated && props.isAdmin ? (
+      <>
+        {/* <NavLink to="/shopping_cart">Shopping Cart</NavLink> */}
 
-      <NavLink to="/dashboard" activeStyle={{ backgroundColor: "red" }}>
-        Dashboard
-      </NavLink>
-    </>
-  ) : (
+        <NavLink to="/dashboard" activeStyle={{ backgroundColor: "red" }}>
+          Dashboard
+        </NavLink>
+      </>
+    ) : null;
+
+  const logout = props.authenticated ? (
+    <LogOutComponent logout={props.logout} />
+  ) : null;
+
+  const signin = !props.authenticated ? (
     <NavLink to="/account" activeStyle={{ backgroundColor: "red" }}>
       Account
     </NavLink>
-  );
-  const logout = props.authenticated ? <LogOutComponent /> : null;
+  ) : null;
   // const dashboard = props.authenticated ? (
   //   <NavLink to="/dashboard" activeStyle={{ backgroundColor: "red" }}>
   //     Dashboard
@@ -60,6 +66,8 @@ const navbar = props => {
             <NavLink to="/contact" activeStyle={{ backgroundColor: "red" }}>
               Contact
             </NavLink>
+
+            {signin}
             {authenticatedData}
 
             <NavLink to="/cart" activeStyle={{ backgroundColor: "red" }}>
@@ -89,6 +97,7 @@ const navbar = props => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+
       {/* <Switch>
         {/* <Route exact path="/" component={Home} /> */}
       {/* <ProtectedRoute authenticated={props.authenticated} path="/dashboard" component={Dashboard} />

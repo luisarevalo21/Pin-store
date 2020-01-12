@@ -1,10 +1,80 @@
 import React, { Component } from "react";
+import { render } from "react-dom";
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+// import AlertTemplate from "react-alert-template-basic";
+import { useAlert } from "react-alert";
 import classes from "./DashBoardComponent.module.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import axios from "../../axios";
 import firebase from "../../firebase";
+import PopupComponent from "../../components/PopUpComponent/PopUpComponent";
+import Spinner from "react-bootstrap/Spinner";
+// import $ from "jquery";
+
 import InputComponent from "../../components/InputComponents/InputComponents";
+
+const intialState = {
+  submissionForm: {
+    title: {
+      value: "",
+      validation: {
+        required: true,
+        minLength: 5
+      },
+      type: "input",
+      valid: false,
+      touched: false
+    },
+
+    price: {
+      value: "",
+      validation: {
+        required: true,
+        minValue: 0
+      },
+      type: "price",
+      valid: false,
+      touched: false
+    },
+    description: {
+      value: "",
+      validation: {
+        required: true
+      },
+      type: "textarea",
+      valid: false,
+      touched: false
+    },
+
+    dropdown: {
+      value: "",
+      validation: {
+        required: true
+      },
+      type: "dropdown",
+      valid: false,
+      touched: false
+    },
+
+    file: {
+      value: "",
+      validation: {
+        type: "image/jpeg"
+      },
+      valid: false,
+      touched: false,
+      type: "file",
+      lastPdfAddTime: ""
+    }
+  },
+
+  url: null,
+  formIsValid: false,
+  item: "",
+  posting: false,
+  progress: 0
+};
 class DashBoardComponent extends Component {
   state = {
     submissionForm: {
@@ -56,12 +126,17 @@ class DashBoardComponent extends Component {
         },
         valid: false,
         touched: false,
-        type: "file"
+        type: "file",
+        lastPdfAddTime: ""
       }
     },
     url: null,
     formIsValid: false,
-    item: ""
+    item: "",
+    posting: false,
+    progress: 0,
+    ref: 12
+
     // errors: {
     //   title: "",
     //   description: "",
@@ -90,7 +165,7 @@ class DashBoardComponent extends Component {
     }
 
     if (rules.type) {
-      isValid = value.type === rules.type && isValid;
+      if (value !== undefined) isValid = value.type === rules.type && isValid;
     }
     if (rules.minValue) {
       isValid = value > rules.minValue && isValid;
@@ -105,9 +180,11 @@ class DashBoardComponent extends Component {
 
     const submissionFormElement = { ...submissionFormCopy[name] };
 
+    console.log("THE EVENT IS", event.timeStamp);
     // console.log(event.target.value[0]);
     if (name === "file") {
       submissionFormElement.value = event.target.files[0];
+      submissionFormElement.lastPdfAddTime = event.timeStamp;
     } else if (name === "dropdown") {
       submissionFormElement.value = event.value;
     } else {
@@ -179,7 +256,26 @@ class DashBoardComponent extends Component {
   //   this.setState({ [name]: event.value });
   // };
 
-  handleSubmit = () => {
+  clearState = event => {
+    console.log("clear the state");
+    this.setState(intialState);
+  };
+  handleCompletion = () => {
+    console.log("button was pressed");
+    this.props.history.push("/");
+  };
+
+  handleNewSubmission = event => {
+    this.setState({ posting: false });
+    this.clearState();
+  };
+
+  // handleToggle = () => {
+  //   this.handleNewSubmission();
+  // };
+  handleSubmit = e => {
+    const { file, item } = this.state;
+
     // const { item } = this.state;
     const formData = {};
     for (let formIdenifier in this.state.submissionForm) {
@@ -193,6 +289,7 @@ class DashBoardComponent extends Component {
     // console.log("formdata value is ", formData["price"].value);
 
     // if (title !== "" && description !== "" && price > 0 && url !== null) {
+
     const storage = firebase.storage();
     // let fetchedUrl;
     //can change to folder name depending on item selected /pins etc
@@ -206,7 +303,7 @@ class DashBoardComponent extends Component {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        this.setState({ progress });
+        this.setState({ progress, posting: true });
       },
       error => {
         // Error function ...
@@ -223,13 +320,33 @@ class DashBoardComponent extends Component {
             this.setState({ url });
           })
           .then(() => {
+            // const data = {
+            //   title: this.state.title,
+            //   description: this.state.title,
+            //   price: this.state.price,
+            //   type: this.state.item,
+            //   url: this.state.url
+            // };
+
             formData.url = this.state.url;
 
             // console.log("data before push", formData.dropdown);
             axios
               .post(`/${formData.dropdown}.json`, formData)
               .then(response => {
-                console.log(response);
+                // this.setState({completed:true})
+                // const options = {
+                //   // you can also just use 'bottom center'
+                //   position: positions.BOTTOM_CENTER,
+                //   timeout: 5000,
+                //   offset: "30px",
+                //   // you can also just use 'scale'
+                //   transition: transitions.SCALE
+                // };
+                // alert("File succesfully uploaded");
+                /* rerote to main after succesfull submitting*/
+                // this.props.history.push("/");
+                // console.log(response);
               })
               .catch(error => console.log(error));
           })
@@ -300,7 +417,20 @@ class DashBoardComponent extends Component {
 
   render() {
     const { submissionForm } = this.state;
+    let loadModual = null;
 
+    console.log("the state is ", this.state);
+    if (this.state.posting) {
+      loadModual = (
+        <PopupComponent
+          posting={this.state.posting}
+          progress={this.state.progress}
+          completed={this.handleCompletion}
+          reset={this.handleNewSubmission}
+          handleToggle={this.handleNewSubmission}
+        />
+      );
+    }
     const formElementArray = [];
 
     for (let key in this.state.submissionForm) {
@@ -319,6 +449,7 @@ class DashBoardComponent extends Component {
           invalid={!element.config.valid}
           touched={element.config.touched}
           value={element.config.value}
+          myKey={element.config.lastPdfAddTime}
         />
       );
     });
@@ -328,6 +459,8 @@ class DashBoardComponent extends Component {
         <div className={classes.Submission} onSubmit={this.handleSubmit}>
           <h4>Submit new entry </h4>
           {form}
+
+          {/* <button onClick={this.clearState}>clear</button> */}
           <button
             onClick={this.handleSubmit}
             disabled={!this.state.formIsValid}
@@ -335,6 +468,24 @@ class DashBoardComponent extends Component {
           >
             Submit
           </button>
+
+          {/* <input id="input" type="file" onChange={this.handleFileChange} /> */}
+          {/* <button
+            onClick={this.handleSubmit}
+            className="btn btn-success btn-ladda-progress"
+            datastyle="expand-right"
+          >
+            Submit {this.state.progress}
+          </button> */}
+          {/* <Alert /> */}
+
+          {loadModual}
+          {/* <PopupComponent clicked={this.state.posting} /> */}
+          {/* <progress
+            className="uploadProgress"
+            value={this.state.progress}
+            max="1.0"
+          /> */}
         </div>
       </div>
     );
@@ -342,65 +493,3 @@ class DashBoardComponent extends Component {
 }
 
 export default DashBoardComponent;
-
-{
-  /* <input
-            onChange={e => this.handleChange(e, "title")}
-            placeholder="Title"
-            type="text"
-            className={inputClasses}
-          /> */
-}
-{
-  /* <InputComponent
-            type="input"
-            changed={e => this.handleChange(e, "title")}
-            invalid={!this.state.submissionForm.title.valid}
-            touched={this.state.submissionForm.title.touched}
-          /> */
-}
-
-{
-  /* <input
-            onChange={e => this.handleChange(e, "price")}
-            placeholder="Price"
-            type="number"
-          /> */
-}
-
-{
-  /* <Dropdown
-            value={this.state.item}
-            onChange={e => this.handleItemChange(e, "item")}
-            placeholder="Select an option"
-            className={classes.Dropdown}
-          /> */
-}
-
-{
-  /* <textarea
-            onChange={e => this.handleChange(e, "description")}
-            placeholder="description"
-            type="text"
-            className={classes.TextArea}
-
-            // style={{ minHeight: "100px" }}
-          /> */
-}
-
-{
-  /* <InputComponent
-            type="textarea"
-            changed={e => this.handleChange(e, "description")}
-            invalid={!this.state.submissionForm.description.valid}
-            touched={this.state.submissionForm.description.touched}
-          /> */
-}
-
-{
-  /* <input
-            id="input"
-            type="file"
-            onChange={e => this.handleChange(e, "file")}
-          /> */
-}

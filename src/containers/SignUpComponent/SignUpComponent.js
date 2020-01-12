@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import classes from "./SignUpComponent.module.css";
 import { withRouter } from "react-router-dom";
 import InputComponent from "../../components/InputComponents/InputComponents";
+import axios from "../../axios";
 // class SignUpComponent extends Component {
 //   state = {
 //     email: "",
@@ -136,6 +137,7 @@ class SignUpComponent extends Component {
 
     return isValid;
   }
+
   // handleInputChange = event => {
   //   this.setState({ [event.target.name]: event.target.value });
   // };
@@ -145,20 +147,56 @@ class SignUpComponent extends Component {
     if (password.value === reEnterPassword.value) {
       console.log("passwords are the same");
 
+      // return firebase
+      //   .auth()
+      //   .createUserWithEmailAndPassword(email.value, password.value)
+      //   .then(user =>
+
+      //     {
+      //       const newUser = {
+      //         name: user.name,
+      //         email: user.email,
+      //         uid: user.uid
+
+      //       }
+      //       axios.patch("/users.json", {[newUser.uid]: newUser}).then(response=>console.log(respones)).catch(error=>console.log(error))
+      //     }
+
       //cahnge code if sign up doesnt work
+
       firebase
         .auth()
         .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then()
-        .then(user => {
+        .then(() => {
           alert("You successfully Signed Up");
 
-          this.props.history.push("/");
-
-          return firebase
+          firebase
             .auth()
-            .createUserWithEmailAndPassword(email.value, password.value);
+            .createUserWithEmailAndPassword(email.value, password.value)
+            .then(user => {
+              console.log("the user is", user.user);
+              const newUser = {
+                // name: user.user.name,
+                email: user.user.email,
+                uid: user.user.uid
+              };
+              axios
+                .patch("/users.json", { [newUser.uid]: newUser })
+                .then(response => {
+                  console.log(response);
+                  this.props.history.push("/");
+                })
+                .catch(error => console.log(error));
+            });
         })
+
+        // console.log("the user is", user);
+        // this.props.history.push("/");
+
+        // return firebase
+        //   .auth()
+        //   .createUserWithEmailAndPassword(email.value, password.value);
+
         .catch(error => {
           alert("An error was submitted: " + error);
           this.setState({ error: error });

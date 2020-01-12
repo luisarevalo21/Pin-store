@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from "./StoreComponent.module.css";
 import image from "../../assets/images/HomeImages/PhoneGrips.jpg";
-
+import Alert from "../../components/Alert/Alert";
 import soraImage from "../../assets/images/StoreImages/soraSticker.jpg";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import CardComponent from "../../components/CardComponent/CardComponent";
@@ -324,6 +324,8 @@ class StoreComponent extends Component {
           <div className={classes.Gallery}>
             {items}
 
+            {/* //ALERT COMPONENT  */}
+            {/* <Alert /> */}
             {/* <ShopingCartComponent cart={this.state.cart} /> */}
             {/* <CardComponent title="Sora sticker" image={soraImage} price={2.0} /> */}
             {/* <CardComponent />
