@@ -50,8 +50,26 @@ const inputComponent = props => {
           onChange={props.changed}
           className={inputClasses.join(" ")}
           key={props.myKey}
-          // ref={props.myRef}
         />
+
+        // <>
+        //   <label className={inputClasses.join(" ")}>
+        //     <input
+        //       type="file"
+        //       onChange={props.changed}
+        //       key={props.myKey}
+        //       hidden
+        //     />
+        //     text
+        //   </label>
+        // </>
+        //   type="file"
+        //   onChange={props.changed}
+        //   className={inputClasses.join(" ")}
+        //   key={props.myKey}
+
+        //   // ref={props.myRef}
+        // />
       );
       break;
 

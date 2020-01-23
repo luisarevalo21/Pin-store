@@ -30,14 +30,14 @@ class SelectedItem extends Component {
     // const storage = this.props.firebase.storage().ref();
 
     // console.
-    const { title, type } = this.props.match.params;
+    const { id, category } = this.props.match.params;
 
-    console.log("the id is", title);
+    console.log("the id is", id);
 
-    console.log("the id is", type);
+    console.log("the id is", category);
 
     axios
-      .get(`/${type}/${title}.json`)
+      .get(`/${category}/${id}.json`)
       .then(response => this.setState({ selectedItem: response.data }))
       .catch(error => console.log(error));
 

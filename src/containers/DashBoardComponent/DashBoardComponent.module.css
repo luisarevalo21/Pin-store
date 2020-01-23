@@ -1,4 +1,4 @@
-progress{
+progress {
   visibility: false;
 }
 
@@ -57,4 +57,12 @@ border-radius: 5px; */
 .Button:disabled {
   cursor: not-allowed;
   color: #ccc;
+}
+
+.Input {
+  background-color: rgb(236, 236, 236);
+  min-height: 30px;
+  padding: 12px 15px;
+  margin-bottom: 3%;
+  border-radius: 3px;
 }

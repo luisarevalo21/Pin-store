@@ -150,9 +150,9 @@ class StoreComponent extends Component {
         break;
     }
   };
-  handleClick = (title, type) => {
+  handleClick = (id, category) => {
     // console.log("the type is", title);
-    this.props.history.push(`${this.props.match.url}/${type}/${title}`);
+    this.props.history.push(`${this.props.match.url}/${category}/${id}`);
     // console.log(this.props.location);
 
     // return <Link to="/store/item" />;
@@ -226,14 +226,11 @@ class StoreComponent extends Component {
 
         // console.log("the keys are", keys);
         items = keys.map(element => {
-          // console.log("the element is", element);
+          console.log("the element is", element);
           return (
             <CardComponent
               clicked={() =>
-                this.handleClick(
-                  combined[element].title,
-                  combined[element].type
-                )
+                this.handleClick(element, combined[element].category)
               }
               key={element}
               title={combined[element].title}
@@ -259,7 +256,7 @@ class StoreComponent extends Component {
           return (
             <CardComponent
               clicked={() =>
-                this.handleClick(pins[element].title, pins[element].type)
+                this.handleClick(pins[element].title, pins[element].category)
               }
               key={element}
               title={pins[element].title}
@@ -287,7 +284,7 @@ class StoreComponent extends Component {
               clicked={() =>
                 this.handleClick(
                   stickers[element].title,
-                  stickers[element].type
+                  stickers[element].category
                 )
               }
               key={element}

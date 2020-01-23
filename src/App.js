@@ -50,12 +50,22 @@ class App extends Component {
     this.setState({ cart: [] });
   };
   AddItem = item => {
-    // console.log("add item was pressed", item);
+    console.log("add item was pressed", item);
     const copyState = { ...this.state };
 
     if (!copyState.cart.includes(item)) {
       copyState.cart.push(item);
+      const data = {
+        id: item.id,
+        category: item.category
+      };
+      axios
+        .put(`/users/${copyState.user.uid}/cart/${data.id}.json`, data)
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
     }
+
+    // console.log("THE CURRENT USER IS", copyState.user);
 
     this.setState({ cart: copyState.cart });
   };
@@ -108,22 +118,30 @@ class App extends Component {
                 auth: idToken
               }
             })
-            .then(response =>
-              // console.log("the response is", response))
-              this.setState({ isAdmin: response.data.isAdmin })
-            )
+            .then(response => {
+              console.log("the response is", response.data.cart);
+
+              this.setState({
+                isAdmin: response.data.isAdmin
+                // cart: response.data.cart
+              });
+            })
             .catch(error => console.log(error));
+
+          // console.log("THE CART IS,", this.state.cart);
           user
             ? this.setState({
                 authenticated: true,
                 user: user,
                 loggedin: true,
+                // cart: cart,
                 // uid: user.uid,
                 token: idToken
               })
             : this.setState({
                 authenticated: false,
                 user: null,
+                // cart: null,
                 loggedin: false,
                 token: null
               });
@@ -185,7 +203,7 @@ class App extends Component {
           <Route path="/" exact component={HomeComponent} />
           <Route path="/about" component={AboutComponent} />
           <Route
-            path="/store/:type/:title"
+            path="/store/:category/:id"
             exact
             render={props => (
               <SelectedItemComponent AddItem={this.AddItem} {...props} />

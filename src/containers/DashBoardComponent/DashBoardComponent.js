@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, cloneElement } from "react";
 import { render } from "react-dom";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 // import AlertTemplate from "react-alert-template-basic";
@@ -47,7 +47,7 @@ const intialState = {
       touched: false
     },
 
-    dropdown: {
+    category: {
       value: "",
       validation: {
         required: true
@@ -70,7 +70,8 @@ const intialState = {
   },
 
   url: null,
-  formIsValid: true,
+  selectedFile: null,
+  formIsValid: false,
   item: "",
   posting: false,
   progress: 0
@@ -109,7 +110,7 @@ class DashBoardComponent extends Component {
         touched: false
       },
 
-      dropdown: {
+      category: {
         value: "",
         validation: {
           required: true
@@ -117,21 +118,23 @@ class DashBoardComponent extends Component {
         type: "dropdown",
         valid: false,
         touched: false
-      },
-
-      file: {
-        value: "",
-        validation: {
-          type: "image/jpeg"
-        },
-        valid: false,
-        touched: false,
-        type: "file",
-        lastPdfAddTime: ""
       }
+
+      // file: {
+      //   value: "",
+      //   validation: {
+      //     type: "image/jpeg"
+      //   },
+      //   name: "",
+      //   valid: false,
+      //   touched: false,
+      //   type: "file",
+      //   lastPdfAddTime: ""
+      // }
     },
     url: null,
     formIsValid: false,
+    selectedFile: null,
     item: "",
     posting: false,
     progress: 0,
@@ -151,6 +154,14 @@ class DashBoardComponent extends Component {
     //   },
     //   valid: false
     // },
+  };
+
+  handleFileUpload = event => {
+    const copy = { ...this.state };
+
+    copy.selectedFile = event.target.files[0];
+
+    this.setState(copy);
   };
 
   checkValdity(value, rules) {
@@ -183,13 +194,15 @@ class DashBoardComponent extends Component {
     console.log("THE EVENT IS", event.timeStamp);
     // console.log(event.target.value[0]);
     if (name === "file") {
-      submissionFormElement.value = event.target.files[0];
-      submissionFormElement.lastPdfAddTime = event.timeStamp;
-    } else if (name === "dropdown") {
+      // submissionFormElement.fileInput = event.target.files[0];
+      // submissionFormElement.lastPdfAddTime = event.timeStamp;
+      // submissionFormElement.name = event.target.files[0].name;
+    } else if (name === "category") {
       submissionFormElement.value = event.value;
     } else {
       submissionFormElement.value = event.target.value;
     }
+
     submissionFormElement.touched = true;
 
     submissionFormElement.valid = this.checkValdity(
@@ -224,6 +237,8 @@ class DashBoardComponent extends Component {
     //     errors.price = value < 0 ? "Price must be greater than 0" : null;
     //     break;
     // }
+
+    console.log("the submission element is", submissionFormCopy);
 
     console.log("event is", event);
     this.setState({
@@ -273,8 +288,9 @@ class DashBoardComponent extends Component {
   // handleToggle = () => {
   //   this.handleNewSubmission();
   // };
+
   handleSubmit = e => {
-    const { file, item } = this.state;
+    const { selectedFile } = this.state;
 
     // const { item } = this.state;
     const formData = {};
@@ -282,11 +298,11 @@ class DashBoardComponent extends Component {
       formData[formIdenifier] = this.state.submissionForm[formIdenifier].value;
     }
 
-    const folderName = formData.dropdown;
+    const folderName = formData.category;
 
     formData.price = Number(formData.price).toFixed(2);
 
-    // // console.log("formdata value is ", formData["price"].value);
+    // // console.log( value is ", formData["price"].value);
 
     // if (title !== "" && description !== "" && price > 0 && url !== null) {
 
@@ -294,8 +310,8 @@ class DashBoardComponent extends Component {
     // let fetchedUrl;
     //can change to folder name depending on item selected /pins etc
     const uploadTask = storage
-      .ref(`/images/${folderName}/${formData.file.name}`)
-      .put(formData.file);
+      .ref(`/images/${folderName}/${selectedFile.name}`)
+      .put(selectedFile);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -313,7 +329,7 @@ class DashBoardComponent extends Component {
       () => {
         storage
           .ref(`/images/${folderName}`)
-          .child(formData.file.name)
+          .child(selectedFile.name)
           .getDownloadURL()
           .then(url => {
             // console.log("the url is", url);
@@ -330,19 +346,39 @@ class DashBoardComponent extends Component {
 
             formData.url = this.state.url;
 
-            axios
-              .post(`/products/${formData.dropdown}.json`, "true")
-              .then(response =>
-                axios
+            const data = {
+              available: "true",
+              category: formData.category
+            };
 
-                  .put(
-                    `/${formData.dropdown}/${response.data.name}.json`,
-                    formData
-                  )
-                  .then(response => {
-                    console.log(response);
-                  })
-                  .catch(error => console.log(error))
+            axios
+              .post(`/products/${formData.category}.json`, data)
+              .then(
+                response => {
+                  formData.id = response.data.name;
+                  axios
+
+                    .put(
+                      `/${formData.category}/${response.data.name}.json`,
+                      formData
+                    )
+                    .then(response => {
+                      console.log(response);
+                    })
+                    .catch(error => console.log(error));
+                }
+                // formData.id = response.data.name
+                // axios
+
+                //   .put(
+                //     `/${formData.dropdown}/${response.data.name}.json`,
+                //     formData
+                //   )
+                //   .then(response => {
+                //     console.log(response);
+                //   })
+
+                // .catch(error => console.log(error))
               )
               .catch(error => console.log(error));
           });
@@ -503,6 +539,13 @@ class DashBoardComponent extends Component {
           <h4>Submit new entry </h4>
           {form}
 
+          <input
+            type="file"
+            className={classes.Input}
+            onChange={this.handleFileUpload}
+            accept="image/jpg"
+          />
+
           {/* <button onClick={this.clearState}>clear</button> */}
           <button
             onClick={this.handleSubmit}
@@ -512,6 +555,9 @@ class DashBoardComponent extends Component {
             Submit
           </button>
 
+          {/* <input type="file" onChange={e => this.UPLoadFile(e)} />
+          <input type="file" id="files" className="hidden" />
+          <label for="files">Select profile picture</label> */}
           {/* <input id="input" type="file" onChange={this.handleFileChange} /> */}
           {/* <button
             onClick={this.handleSubmit}
