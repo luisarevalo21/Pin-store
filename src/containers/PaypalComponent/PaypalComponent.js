@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import scriptLoader from "react-async-script-loader";
 // import paypal from "paypal-checkout";
 
-// const paypal = window.PAYPAL;
+const paypal = window.PAYPAL;
 
 // console.log("PAYPAL IS", paypal);
 // let ReactButton = paypal.Button.driver("react", {
@@ -241,7 +241,7 @@ class PaypalComponent extends React.Component {
         payment.paymentID = data.paymentID;
         payment.paymentToken = data.paymentToken;
         payment.returnUrl = data.returnUrl;
-        // this.props.onSuccess(payment);
+        this.props.onSuccess(payment);
       });
       // console.log(
 
@@ -271,8 +271,8 @@ class PaypalComponent extends React.Component {
             commit
             payment={payment}
             onAuthorize={onAuthorize}
-            // onCancel={onCancel}
-            // onError={onError}
+            //onCancel={onCancel}
+            //onError={onError}
           />
         )}
       </div>

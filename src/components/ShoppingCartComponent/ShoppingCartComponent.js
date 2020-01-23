@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import ShopListItemComponent from "../ShopListItemComponent/ShopListItemComponent";
 import classes from "./ShoppingCartComponent.module.css";
 import Paypal from "../../containers/PaypalComponent/PaypalComponent";
-// import dotenv from "dotenv";
-// dotenv.config();
+//import dotenv from "dotenv";
+//dotenv.config();
 // console.log(process.env.REACT_APP_METEORITE_STRIKE_DATASET);
 const CLIENT = {
   sandbox: process.env.REACT_APP_PAYPAL_CLIENT_ID_SANDBOX
@@ -14,11 +14,22 @@ const CLIENT = {
 // const ENV = process.env.NODE_ENV === "production" ? "production" : "sandbox";
 const ENV = "sandbox";
 
+const initState = {
+    cart: 0,
+    itemTotal: null
+};
+
+
 class ShopingCartComponent extends Component {
   state = {
     cart: this.props.cart,
     itemTotal: null
   };
+
+    resetState(){
+        this.setState(initState);
+    };
+
 
   // componentDidMount() {
   //   console.log(this.props);
@@ -66,14 +77,21 @@ class ShopingCartComponent extends Component {
     // console.log(this.props);
 
     const onSuccess = (payment, actions) => {
-      console.log("Successful payment!", payment);
+      //this.setState({ cart: null });
+      //console.log("Successful payment!", payment);
       // console.log("actions", actions.order.get());
-      // this.setState({ cart: null, itemTotal: null });
+
       // console.log(actions.payment.get());
       window.alert("Thank you for your purchase!");
-      // this.setState({ cart: null, itemTotal: null });
-      // this.props.success();
-      // this.props.history.push("/");
+      //this.setState({ cart: null });
+      //this.props.success();
+      this.resetState();
+      this.props.history.push("/");
+      //actions.order.capture().then(function (details) {
+        // Show a success message to the buyer
+        //alert('Transaction completed by ' + details.payer.name.given_name + '!');
+      //});
+
     };
     const onError = error =>
       console.log("Erroneous payment OR failed to load script!", error);
@@ -133,8 +151,8 @@ class ShopingCartComponent extends Component {
               total={100}
               onSuccess={onSuccess}
               cart={this.state.cart}
-              // onError={onError}
-              // onCancel={onCancel}
+              onError={onError}
+              onCancel={onCancel}
             />
           </div>
           {/* </div> */}
