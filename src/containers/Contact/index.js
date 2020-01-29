@@ -70,7 +70,7 @@ class Contact extends Component {
                     <div className='row justify-content-md-center'>
 
                         {/* Contact Form */}
-                        <div id='contactForm' className='col-md-8'>
+                        <div id='contactForm' className='col-md-6'>
                             <h1 className='p-3 text-dark' style={{ fontSize: '50px' }}>Contact</h1>
 
                             <form>
