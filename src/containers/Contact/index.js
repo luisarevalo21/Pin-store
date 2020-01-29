@@ -11,7 +11,7 @@ class Contact extends Component {
         order: '',
         email: '',
         phone: '',
-        message: ''
+        message: '',
     };
 
     handleChange = event => {
@@ -83,7 +83,7 @@ class Contact extends Component {
                                         placeholder='First & Last Name'
                                         onChange={this.handleChange}
                                         value={this.state.name}
-                                        required='true'  
+                                        required  
                                     />
 
                                     <input
@@ -93,7 +93,7 @@ class Contact extends Component {
                                         placeholder='Order #'
                                         onChange={this.handleChange}
                                         value={this.state.order}
-                                        required='true'
+                                        required
                                     />
 
                                 </div>
@@ -108,7 +108,7 @@ class Contact extends Component {
                                         placeholder='E-mail'
                                         onChange={this.handleChange}
                                         value={this.state.email}
-                                        required='true'
+                                        required
                                     />
 
                                     <input
@@ -118,7 +118,7 @@ class Contact extends Component {
                                         placeholder='Phone Number'
                                         onChange={this.handleChange}
                                         value={this.state.phone}
-                                        required='true'
+                                        required
                                     />
                                 </div>
 
@@ -130,7 +130,7 @@ class Contact extends Component {
                                         placeholder='Your message to us . . .'
                                         onChange={this.handleChange}
                                         value={this.state.message}
-                                        required='true'
+                                        required
                                     />
                                 </div>
 
@@ -143,6 +143,7 @@ class Contact extends Component {
                                         name='submit'
                                         type='submit'
                                         onClick={this.handleSubmit}
+                                        disabled={this.state.name === '' || this.state.phone === '' || this.state.email === '' || this.state.order === '' || this.state.message === '' ? true : false}
                                     >
                                         Submit
                                     </button>
