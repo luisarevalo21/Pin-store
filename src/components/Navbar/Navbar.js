@@ -17,12 +17,12 @@ const navbar = props => {
   const authenticatedData = props.authenticated ? (
     <>
       <NavLink to="/shopping_cart">Shopping Cart</NavLink>
-      <NavLink to="/dashboard" activeStyle={{ backgroundColor: "red" }}>
+      <NavLink to="/dashboard" style={{fontSize:'18px'}} activeStyle={{ fontSize: '20px' }}>
         Dashboard
       </NavLink>
     </>
   ) : (
-    <NavLink to="/account" activeStyle={{ backgroundColor: "red" }}>
+    <NavLink to="/account" style={{fontSize:'18px'}} activeStyle={{ fontSize: '20px' }}>
       Account
     </NavLink>
   );
@@ -40,22 +40,22 @@ const navbar = props => {
 
   return (
     <div>
-      <Navbar sticky="top" collapseOnSelect expand="md">
+      <Navbar fixed="top" collapseOnSelect expand="md" bg='white'>
         <Navbar.Brand className="p-0" href="/"><img src={Logo} className=""  alt="" width="30%"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto mr-5">
-            <NavLink to="/" exact activeStyle={{ backgroundColor: "red" }}>
+            <NavLink to="/" exact style={{fontSize:'18px'}} activeStyle={{ fontSize: '20px' }}>
               Home
             </NavLink>
-            <NavLink to="/about" activeStyle={{ backgroundColor: "red" }}>
+            <NavLink to="/about" style={{fontSize:'18px'}} activeStyle={{ fontSize: '20px' }}>
               About
             </NavLink>
-            <NavLink to="/store" activeStyle={{ backgroundColor: "red" }}>
+            <NavLink to="/store" style={{fontSize:'18px'}} activeStyle={{ fontSize: '20px' }}>
               Store
             </NavLink>
 
-            <NavLink to="/contact" activeStyle={{ backgroundColor: "red" }}>
+            <NavLink to="/contact" style={{fontSize:'18px'}} activeStyle={{ fontSize: '20px' }}>
               Contact
             </NavLink>
             {authenticatedData}
